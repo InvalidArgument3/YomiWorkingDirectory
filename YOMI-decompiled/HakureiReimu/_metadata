@@ -1,0 +1,12 @@
+{
+    "name": "HakureiReimu",
+    "friendly_name": "HakureiReimu",
+    "description": "Test",
+    "author": "Invalid",
+    "version": "1",
+    "link": "",
+    "id": "000000001",
+    "overwrites": false,
+    "requires": ["char_loader"],
+    "priority": 0
+}

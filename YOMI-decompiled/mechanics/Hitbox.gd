@@ -1,0 +1,356 @@
+tool 
+
+extends CollisionBox
+
+class_name Hitbox
+
+const COMBO_PUSHBACK_COEFFICIENT = "0.4"
+const COMBO_SAME_MOVE_KNOCKBACK_INCREASE_AMOUNT_GROUNDED = "1.25"
+const COMBO_SAME_MOVE_KNOCKBACK_INCREASE_AMOUNT_AERIAL = "1.05"
+const COMBO_SAME_MOVE_HITSTUN_DECREASE_AMOUNT = 1
+const DEFAULT_HIT_PARTICLE = preload("res://fx/HitEffect1.tscn")
+
+const MAX_KNOCKBACK = "30"
+
+var HIT_PARTICLE = preload("res://fx/HitEffect1.tscn")
+
+enum HitboxType{
+	Normal, 
+	Flip, 
+	ThrowHit, 
+	OffensiveBurst, 
+	Burst, 
+}
+
+
+
+signal hit_something(obj, hitbox)
+signal got_parried()
+
+enum HitHeight{
+	High
+	Mid
+	Low
+}
+
+export  var _c_Damage = 0
+export  var damage:int = 0
+export  var damage_in_combo:int = - 1
+export  var minimum_damage:int = 0
+
+export  var _c_Hit_Properties = 0
+export (HitboxType) var hitbox_type = HitboxType.Normal
+export  var hitstun_ticks:int = 30
+export  var combo_hitstun_ticks:int = - 1
+export  var hitlag_ticks:int = 4
+export  var victim_hitlag:int = - 1
+export  var damage_proration:int = 0
+export  var cancellable = true
+export  var increment_combo = true
+export  var hits_otg = false
+export  var hits_vs_grounded = true
+export  var hits_vs_aerial = true
+export  var can_counter_hit = true
+export  var di_modifier = "1.0"
+export  var sdi_modifier = "1.0"
+export  var meter_gain_modifier = "1.0"
+export  var parry_meter_gain = - 1
+export  var ignore_armor = false
+export  var followup_state = ""
+export  var force_grounded = false
+export  var can_clash = true
+export  var hits_vs_dizzy = true
+
+export (HitHeight) var hit_height = HitHeight.Mid
+
+export  var _c_Grouping = 0
+
+export  var priority:int = 0
+
+
+
+
+export  var group:int = 0
+
+export  var _c_Fx = 0
+export  var screenshake_amount:int = 4
+export  var screenshake_frames:int = - 1
+export (PackedScene) var hit_particle
+export  var replace_hit_particle = false
+export  var camera_bump_dir = Vector2()
+export (PackedScene) var whiff_particle = null
+export  var bump_on_whiff = false
+export  var rumble = true
+
+export  var _c_Sfx = 0
+export (AudioStream) var whiff_sound = preload("res://sound/common/whiff1.wav")
+export (AudioStream) var hit_sound = preload("res://sound/common/hit1.wav")
+export (AudioStream) var hit_bass_sound = preload("res://sound/common/hit_bass.wav")
+export  var whiff_sound_volume = - 8.0
+export  var hit_sound_volume = - 5.0
+export  var bass_on_whiff = false
+
+export  var _c_Knockback = 0
+export  var dir_x:String = "1.0"
+export  var dir_y:String = "-1.0"
+export  var knockback:String = "10.0"
+export  var launch_reversible = false
+
+export  var pushback_x:String = "1.0"
+
+export  var _c_Knockback_Type = 0
+export  var grounded_hit_state = "HurtGrounded"
+export  var aerial_hit_state = "HurtAerial"
+export  var knockdown = false
+export  var knockdown_extends_hitstun = true
+export  var hard_knockdown = false
+export  var disable_collision = true
+export  var air_ground_bounce = false
+export  var ground_bounce = true
+export  var wall_slam = false
+
+export  var _c_Frame_Data = 0
+export  var start_tick:int = 0
+export  var active_ticks:int = 5
+export  var always_on = false
+
+export  var _c_Loop_Data = 0
+export  var looping = false
+export  var loop_active_ticks:int = 2
+export  var loop_inactive_ticks:int = 2
+
+var tick:int = 1
+var host
+var active = false
+var enabled = false
+var spawn_particle_effect = true
+var throw = false
+var played_whiff_sound = false
+
+var grouped_hitboxes = []
+
+var hit_objects = []
+
+var whiff_sound_player
+var hit_sound_player
+var hit_bass_sound_player
+
+
+func copy_to(hitbox:CollisionBox):
+
+
+	var properties = get_script().get_script_property_list()
+	for variable in properties:
+		var value = get(variable.name)
+		if not (value is Object or value is Array or value is Dictionary):
+			hitbox.set(variable.name, value)
+	
+func is_projectile():
+	return not host.is_in_group("Fighter")
+
+func setup_audio():
+	if not host.is_ghost:
+		if whiff_sound:
+			whiff_sound_player = VariableSound2D.new()
+			call_deferred("add_child", whiff_sound_player)
+			whiff_sound_player.bus = "Fx"
+			whiff_sound_player.stream = whiff_sound
+			whiff_sound_player.volume_db = whiff_sound_volume
+
+		if hit_sound:
+			hit_sound_player = VariableSound2D.new()
+			call_deferred("add_child", hit_sound_player)
+			hit_sound_player.bus = "Fx"
+			hit_sound_player.stream = hit_sound
+			hit_sound_player.volume_db = hit_sound_volume
+			
+		if hit_bass_sound:
+			hit_bass_sound_player = VariableSound2D.new()
+			call_deferred("add_child", hit_bass_sound_player)
+			hit_bass_sound_player.bus = "Fx"
+			hit_bass_sound_player.stream = hit_bass_sound
+			hit_bass_sound_player.volume_db = hit_sound_volume
+
+func play_whiff_sound():
+	if ReplayManager.resimulating or host.is_ghost:
+		return 
+	if whiff_sound_player:
+		var can_play_whiff_sound = true
+		for hitbox in grouped_hitboxes:
+			if hitbox.played_whiff_sound:
+				can_play_whiff_sound = false
+				break
+		if can_play_whiff_sound:
+			played_whiff_sound = true
+			whiff_sound_player.play()
+			if bass_on_whiff and hit_bass_sound_player:
+				hit_bass_sound_player.play()
+
+func activate():
+	if active:
+		return 
+	spawn_whiff_particle()
+	play_whiff_sound()
+	tick = 0
+	active = true
+	enabled = true
+	if host.is_in_group("Fighter"):
+		cancellable = cancellable or (bool(host.get("turbo_mode")) and not throw)
+	if victim_hitlag == - 1:
+		victim_hitlag = hitlag_ticks
+	if bump_on_whiff and not host.is_ghost:
+		var camera = get_tree().get_nodes_in_group("Camera")[0]
+		camera.bump(camera_bump_dir, screenshake_amount, Utils.frames(victim_hitlag if screenshake_frames < 0 else screenshake_frames))
+
+func deactivate():
+	played_whiff_sound = false
+	active = false
+	enabled = false
+	hit_objects = []
+
+func to_data():
+	return HitboxData.new(self)
+
+func is_counter_hit():
+	return can_counter_hit and (host.is_in_group("Fighter") and host.initiative and host.opponent.current_state().has_hitboxes and host.opponent.current_state().can_be_counterhit)
+
+func spawn_whiff_particle():
+	if whiff_particle:
+		var center = get_center()
+		host.spawn_particle_effect(whiff_particle, Vector2(center.x, center.y), Vector2(x_facing(), 0))
+
+func spawn_particle(particle, obj, dir):
+	host.spawn_particle_effect(particle, get_overlap_center_float(obj.hurtbox), dir)
+
+func init():
+	if height < 0:
+		height *= - 1
+	if width < 0:
+		width *= - 1
+	if combo_hitstun_ticks == - 1:
+		combo_hitstun_ticks = hitstun_ticks
+	call_deferred("setup_audio")
+
+func get_real_knockback():
+	if host.is_in_group("Fighter"):
+		if not (host.current_state().state_name in host.combo_moves_used):
+			return knockback
+		var knockback_modifier = host.fixed.powu(COMBO_SAME_MOVE_KNOCKBACK_INCREASE_AMOUNT_GROUNDED if host.opponent.is_grounded() else COMBO_SAME_MOVE_KNOCKBACK_INCREASE_AMOUNT_AERIAL, host.combo_moves_used[host.current_state().state_name])
+		var final_kb = host.fixed.mul(knockback, knockback_modifier)
+		if host.fixed.gt(final_kb, MAX_KNOCKBACK):
+			final_kb = MAX_KNOCKBACK
+
+
+
+
+		return final_kb
+	else :
+		return knockback
+
+
+
+
+
+
+
+
+
+
+
+
+
+func get_real_hitstun():
+	if host.is_in_group("Fighter"):
+		var ticks = hitstun_ticks if not host.combo_count > 0 else combo_hitstun_ticks
+		if not (host.current_state().state_name in host.combo_moves_used):
+			return ticks
+		var final_hitstun = Utils.int_max(ticks - (COMBO_SAME_MOVE_HITSTUN_DECREASE_AMOUNT * (host.combo_moves_used[host.current_state().state_name] + 1)), ticks / 2)
+		return final_hitstun
+	else :
+		return hitstun_ticks
+
+func otg_check(obj):
+	return not obj.is_otg() or hits_otg
+
+func hit(obj):
+	if not (obj.name in hit_objects) and ( not obj.invulnerable or hitbox_type == HitboxType.ThrowHit) and otg_check(obj):
+		var camera = get_tree().get_nodes_in_group("Camera")[0]
+		var dir = get_dir_float(true)
+		if grounded_hit_state == "HurtGrounded" and obj.is_grounded():
+				dir.y *= 0
+		for hitbox in grouped_hitboxes:
+			hitbox.hit_objects.append(obj.name)
+		obj.hit_by(self.to_data())
+		var can_hit = true
+		if obj.is_in_group("Fighter"):
+			if host.is_in_group("Fighter"):
+				host.feinting = false
+				host.current_state().feinting = false
+			if not host.is_ghost:
+				if not bump_on_whiff:
+					camera.bump(camera_bump_dir, screenshake_amount, Utils.frames(victim_hitlag if screenshake_frames < 0 else screenshake_frames) * float(obj.global_hitstop_modifier))
+			if obj.can_parry_hitbox(self) or name in obj.parried_hitboxes:
+				can_hit = false
+				emit_signal("got_parried")
+			if obj.on_the_ground:
+				if not hits_otg:
+					can_hit = false
+			if not hits_vs_dizzy:
+				if obj.current_state().state_name == "HurtDizzy":
+					can_hit = false
+		if can_hit and spawn_particle_effect:
+			if hit_particle:
+				spawn_particle(hit_particle, obj, dir)
+			if not replace_hit_particle:
+				spawn_particle(HIT_PARTICLE if Global.enable_custom_hit_sparks else DEFAULT_HIT_PARTICLE, obj, dir)
+
+		if can_hit:
+			var pushback_modifier = host.fixed.mul(str(host.hitstun_decay_combo_count) if host.is_in_group("Fighter") else "0", COMBO_PUSHBACK_COEFFICIENT)
+			var pushback = host.fixed.mul(host.fixed.add(pushback_x, pushback_modifier), "-1")
+			pushback = host.fixed.div(pushback, "2")
+			host.add_pushback(pushback)
+			obj.add_pushback(pushback)
+			var opponent = obj.get("opponent")
+			
+			if opponent:
+				if opponent != host:
+					opponent.add_pushback(pushback)
+			if hit_sound_player and not ReplayManager.resimulating:
+				hit_sound_player.play()
+				if not bass_on_whiff:
+					hit_bass_sound_player.play()
+			emit_signal("hit_something", obj, self)
+
+func get_facing_int():
+	return - 1 if facing == "Left" else 1
+
+func get_angle_float(facing = false):
+	
+	return get_dir_float(facing).angle()
+
+func get_dir_float(facing = false):
+	
+	return Vector2(float(dir_x) * (get_facing_int() if facing else 1), float(dir_y))
+
+func can_draw_box():
+	if Global.get("show_hitboxes") and not Network.get("multiplayer_active"):
+		return (active and enabled and Global.show_hitboxes)
+	else :
+		return .can_draw_box()
+
+func tick():
+	if looping:
+		var loop_tick = tick % (loop_active_ticks + loop_inactive_ticks)
+		var prev_enabled = enabled
+		enabled = loop_tick < loop_active_ticks
+		if not enabled and prev_enabled:
+			for hitbox in grouped_hitboxes:
+				hitbox.hit_objects.clear()
+			played_whiff_sound = false
+		if enabled and not prev_enabled:
+			play_whiff_sound()
+	tick += 1
+	if tick > active_ticks:
+		if not always_on:
+			deactivate()
+	update()
