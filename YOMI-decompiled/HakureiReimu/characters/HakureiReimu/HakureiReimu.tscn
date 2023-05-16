@@ -1,4 +1,4 @@
-[gd_scene load_steps=213 format=2]
+[gd_scene load_steps=212 format=2]
 
 [ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/AirAttack/attackC006.png" type="Texture" id=1]
 [ext_resource path="res://characters/BaseChar.tscn" type="PackedScene" id=2]
@@ -61,6 +61,8 @@
 [ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Burst/spellB006.png" type="Texture" id=59]
 [ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Burst/spellB002.png" type="Texture" id=60]
 [ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Burst/spellB003.png" type="Texture" id=61]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/ActionUiData/ReimuShotActionUIData.tscn" type="PackedScene" id=62]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/States/ShotFan.gd" type="Script" id=63]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/ForwardThrow/attackCc007.png" type="Texture" id=66]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/ForwardThrow/attackCc010.png" type="Texture" id=70]
 [ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Wait/stand000.png" type="Texture" id=79]
@@ -159,9 +161,7 @@
 [ext_resource path="res://HakureiReimu/characters/HakureiReimu/States/DiveKick.gd" type="Script" id=193]
 [ext_resource path="res://ui/ActionSelector/StateIcons/dropkick.png" type="Texture" id=194]
 [ext_resource path="res://characters/wizard/sprites/actionbuttons/magic_missile.png" type="Texture" id=195]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/ActionUiData/ReimuShotActionUIData.tscn" type="PackedScene" id=196]
 [ext_resource path="res://ui/ActionSelector/StateIcons/punch.png" type="Texture" id=197]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/States/ShotBlank.gd" type="Script" id=198]
 [ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Start/spellCall009.png" type="Texture" id=199]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Hustle/emotionAa001.png" type="Texture" id=200]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sounds/bc.wav" type="AudioStream" id=201]
@@ -194,7 +194,6 @@
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DownKick/jump003.png" type="Texture" id=228]
 [ext_resource path="res://characters/robo/sprites/actionicons/air_kick.png" type="Texture" id=229]
 [ext_resource path="res://characters/stickman/sprites/actionicons/stomp.png" type="Texture" id=230]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/ActionUiData/ReimuDownKickActionUIData.tscn" type="PackedScene" id=231]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sounds/se_tan01.wav" type="AudioStream" id=232]
 [ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Start/spellCall003.png" type="Texture" id=233]
 [ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Start/spellCall004.png" type="Texture" id=234]
@@ -437,9 +436,8 @@ character_portrait = ExtResource( 79 )
 
 [node name="Sprite" parent="Flip" index="0"]
 material = SubResource( 2 )
-position = Vector2( 0, 5 )
 frames = SubResource( 3 )
-animation = "Start"
+animation = "Shot1"
 
 [node name="Start" parent="StateMachine" index="0"]
 script = ExtResource( 211 )
@@ -669,7 +667,6 @@ force_tick = 20
 reset_momentum = true
 title = "DownKick"
 type = 1
-data_ui_scene = ExtResource( 231 )
 button_texture = ExtResource( 230 )
 air_type = 1
 self_interruptable = false
@@ -834,7 +831,7 @@ projectile_pos_x = 17
 projectile_pos_y = -21
 title = "Danmaku1"
 type = 2
-data_ui_scene = ExtResource( 196 )
+data_ui_scene = ExtResource( 62 )
 button_texture = ExtResource( 195 )
 air_type = 2
 interruptible_on_opponent_turn = true
@@ -843,8 +840,8 @@ AerialAttack"
 interrupt_into_string = "Aerial"
 hit_cancel_into_string = "Aerial"
 
-[node name="ShotUnscripted" type="Node2D" parent="StateMachine" index="55"]
-script = ExtResource( 198 )
+[node name="ShotFanScripted" type="Node2D" parent="StateMachine" index="55"]
+script = ExtResource( 63 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -852,7 +849,8 @@ apply_forces = true
 apply_fric = true
 apply_grav = true
 sprite_animation = "Shot1"
-anim_length = 9
+anim_length = 18
+ticks_per_frame = 2
 force_dir_x = "-2"
 force_speed = "2"
 force_tick = 10
@@ -860,12 +858,13 @@ sfx = ExtResource( 232 )
 sfx_volume = -10.0
 projectile_pos_x = 17
 projectile_pos_y = -21
-title = "Danmaku1"
+title = "Danmaku2"
 type = 2
-data_ui_scene = ExtResource( 196 )
+data_ui_scene = ExtResource( 62 )
 button_texture = ExtResource( 195 )
-air_type = 1
+air_type = 2
 interruptible_on_opponent_turn = true
+self_interruptable = false
 interrupt_from_string = "Aerial
 AerialAttack"
 interrupt_into_string = "Aerial"
