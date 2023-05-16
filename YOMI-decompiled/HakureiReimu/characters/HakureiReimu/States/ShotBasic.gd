@@ -7,7 +7,7 @@ func _frame_7():
 
 
 	var dir = xy_to_dir(data["x"], data["y"])
-	var obj = host.spawn_object(preload("res://HongMeiling/characters/HongMeiling/Shot1.tscn"), PROJECTILE_X, PROJECTILE_Y, true, {"dir":dir})
+	var obj = host.spawn_object(preload("res://HakureiReimu/characters/HakureiReimu/Shot1.tscn"), PROJECTILE_X, PROJECTILE_Y, true, {"dir":dir})
 
 
 

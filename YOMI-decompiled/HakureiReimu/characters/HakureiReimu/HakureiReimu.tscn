@@ -1,9 +1,9 @@
-[gd_scene load_steps=250 format=2]
+[gd_scene load_steps=213 format=2]
 
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/AirAttack/attackBc004.png" type="Texture" id=1]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/AirAttack/attackC006.png" type="Texture" id=1]
 [ext_resource path="res://characters/BaseChar.tscn" type="PackedScene" id=2]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DashForward/dashFront001.png" type="Texture" id=3]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Uppercut/attackCh003.png" type="Texture" id=4]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/WallSlam/crash000.png" type="Texture" id=4]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DoubleJump/jump005.png" type="Texture" id=5]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DoubleJump/jump008.png" type="Texture" id=6]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DoubleJump/jump009.png" type="Texture" id=7]
@@ -11,95 +11,76 @@
 [ext_resource path="res://characters/stickman/sprites/stickman12.png" type="Texture" id=9]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/HurtGroundedMid/crash001.png" type="Texture" id=10]
 [ext_resource path="res://characters/stickman/sprites/stickman13.png" type="Texture" id=11]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/AirAttack/attackBd000.png" type="Texture" id=12]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/AirAttack/attackBe002.png" type="Texture" id=13]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/AirAttack/attackBc003.png" type="Texture" id=14]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/AirAttack/attackC007.png" type="Texture" id=12]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/AirAttack/attackC000.png" type="Texture" id=13]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/AirAttack/attackC001.png" type="Texture" id=14]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DoubleJump/jump006.png" type="Texture" id=15]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Knockdown/down000.png" type="Texture" id=16]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Burst/attackCf005.png" type="Texture" id=17]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Burst/spellB004.png" type="Texture" id=17]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/HurtAerial/hitAir005.png" type="Texture" id=18]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/HurtGroundedLow/crash000.png" type="Texture" id=19]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Uppercut/attackCg001.png" type="Texture" id=20]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Uppercut/attackCh001.png" type="Texture" id=21]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Shot1/spellA000.png" type="Texture" id=20]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Shot1/spellA006.png" type="Texture" id=21]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/ForwardThrow/attackCc008.png" type="Texture" id=22]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Uppercut/attackCh005.png" type="Texture" id=23]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Shot1/spellA004.png" type="Texture" id=23]
 [ext_resource path="res://characters/stickman/sprites/stickman36.png" type="Texture" id=24]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/HurtGrundedHigh/crash002.png" type="Texture" id=25]
 [ext_resource path="res://characters/stickman/sprites/stickman34.png" type="Texture" id=26]
 [ext_resource path="res://characters/stickman/sprites/stickman26.png" type="Texture" id=27]
 [ext_resource path="res://characters/stickman/sprites/stickman27.png" type="Texture" id=28]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DashBackward/dashBack002.png" type="Texture" id=29]
-[ext_resource path="res://characters/stickman/sprites/stickman28.png" type="Texture" id=30]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Burst/spellB007.png" type="Texture" id=30]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Jump/jump002.png" type="Texture" id=31]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/RollForward/jumpFront001.png" type="Texture" id=32]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DiveKick/spellBb004.png" type="Texture" id=33]
 [ext_resource path="res://characters/stickman/sprites/stickman46.png" type="Texture" id=34]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/States/DropKick.gd" type="Script" id=35]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/States/AttackJab.gd" type="Script" id=35]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DropKick/spellBc000.png" type="Texture" id=36]
 [ext_resource path="res://characters/stickman/sprites/stickman48.png" type="Texture" id=37]
 [ext_resource path="res://characters/stickman/sprites/stickman49.png" type="Texture" id=38]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/AirUpwardPunch/shotCa000.png" type="Texture" id=39]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/AttackJab/attackA000.png" type="Texture" id=39]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/RollBackward/JumpBack003.png" type="Texture" id=40]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/RollBackward/jumpBack001.png" type="Texture" id=41]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/RollBackward/JumpBack005.png" type="Texture" id=42]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/RollBackward/JumpBack006.png" type="Texture" id=43]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/AirUpwardPunch/shotCa001.png" type="Texture" id=44]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/AttackJab/attackA004.png" type="Texture" id=44]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DiveKick/spellBb005.png" type="Texture" id=45]
 [ext_resource path="res://characters/stickman/sprites/stickman47.png" type="Texture" id=46]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/RollBackward/JumpBack004.png" type="Texture" id=47]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/InstantCancel/instacancel.png" type="Texture" id=48]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Getup/standUp004.png" type="Texture" id=49]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/AirUpwardPunch/shotCa002.png" type="Texture" id=50]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/AttackJab/attackA002.png" type="Texture" id=50]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/ParryHigh/guardUpperB000.png" type="Texture" id=51]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/ParryLow/guardSitB001.png" type="Texture" id=52]
 [ext_resource path="res://characters/stickman/sprites/stickman35.png" type="Texture" id=53]
 [ext_resource path="res://characters/stickman/sprites/stickman50.png" type="Texture" id=54]
-[ext_resource path="res://characters/stickman/sprites/nunchuk_heavy3.png" type="Texture" id=55]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Burst/spellB005.png" type="Texture" id=55]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/ThrowTech/hitAir001.png" type="Texture" id=56]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/ForwardThrow/attackCc006.png" type="Texture" id=57]
-[ext_resource path="res://characters/stickman/sprites/nunchuk_heavy1.png" type="Texture" id=58]
-[ext_resource path="res://characters/stickman/sprites/chuk_spin5.png" type="Texture" id=59]
-[ext_resource path="res://characters/stickman/sprites/chuk_spin4.png" type="Texture" id=60]
-[ext_resource path="res://characters/stickman/sprites/chuk_spin3.png" type="Texture" id=61]
-[ext_resource path="res://characters/stickman/sprites/chuk_jump2.png" type="Texture" id=62]
-[ext_resource path="res://characters/stickman/sprites/chuk_spin7.png" type="Texture" id=63]
-[ext_resource path="res://characters/stickman/sprites/phantomdash2.png" type="Texture" id=64]
-[ext_resource path="res://characters/stickman/sprites/nunchuk_light3.png" type="Texture" id=65]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Burst/spellB008.png" type="Texture" id=58]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Burst/spellB006.png" type="Texture" id=59]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Burst/spellB002.png" type="Texture" id=60]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Burst/spellB003.png" type="Texture" id=61]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/ForwardThrow/attackCc007.png" type="Texture" id=66]
-[ext_resource path="res://characters/stickman/sprites/nunchuk_light2.png" type="Texture" id=67]
-[ext_resource path="res://characters/stickman/sprites/nunchuk_heavy4.png" type="Texture" id=68]
-[ext_resource path="res://characters/stickman/sprites/nunchuk_light1.png" type="Texture" id=69]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/ForwardThrow/attackCc010.png" type="Texture" id=70]
-[ext_resource path="res://characters/stickman/sprites/phantomdash3.png" type="Texture" id=71]
-[ext_resource path="res://characters/stickman/sprites/chuk_jump1.png" type="Texture" id=72]
-[ext_resource path="res://characters/stickman/sprites/chuk_spin1.png" type="Texture" id=73]
-[ext_resource path="res://characters/stickman/sprites/chuk_spin2.png" type="Texture" id=74]
-[ext_resource path="res://characters/stickman/sprites/chuk_spin6.png" type="Texture" id=75]
-[ext_resource path="res://characters/stickman/sprites/phantomdash1.png" type="Texture" id=76]
-[ext_resource path="res://characters/stickman/sprites/nunchuk_heavy2.png" type="Texture" id=77]
-[ext_resource path="res://characters/stickman/sprites/chuk_jump3.png" type="Texture" id=78]
 [ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Wait/stand000.png" type="Texture" id=79]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/WallSlam/wallslam001.png" type="Texture" id=80]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Shot1/spellA005.png" type="Texture" id=80]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Hustle/emotionAa000.png" type="Texture" id=81]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/AttackJab/attackAa002.png" type="Texture" id=82]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/AttackJab/attackAa001.png" type="Texture" id=83]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/AttackJab/attackAa003.png" type="Texture" id=84]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/AttackJab/attackAa000.png" type="Texture" id=85]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/States/AttackJab.gd" type="Script" id=86]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/AttackJab/attackA003.png" type="Texture" id=82]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/AttackJab/attackA005.png" type="Texture" id=83]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/AttackJab/attackA001.png" type="Texture" id=84]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/AttackJab/attackA006.png" type="Texture" id=85]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/States/AirAttack.gd" type="Script" id=86]
 [ext_resource path="res://mechanics/Hitbox.gd" type="Script" id=87]
 [ext_resource path="res://characters/BaseChar.gdshader" type="Shader" id=88]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Uppercut/attackCh004.png" type="Texture" id=89]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Uppercut/attackCg000.png" type="Texture" id=90]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Shot1/spellA003.png" type="Texture" id=89]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DashBackward/dashBack000.png" type="Texture" id=91]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DashBackward/dashBack001.png" type="Texture" id=92]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Uppercut/attackCh002.png" type="Texture" id=93]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/RollForward/jumpFront004.png" type="Texture" id=94]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Uppercut/attackCg002.png" type="Texture" id=95]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/RollForward/jumpFront000.png" type="Texture" id=96]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/RollForward/jumpFront002.png" type="Texture" id=97]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/RollForward/jumpFront003.png" type="Texture" id=98]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/RollForward/jumpFront005.png" type="Texture" id=99]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Uppercut/attackCh000.png" type="Texture" id=100]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/JumpKick/attackCa000.png" type="Texture" id=101]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/JumpKick/attackCa001.png" type="Texture" id=102]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/JumpKick/attackCa003.png" type="Texture" id=103]
@@ -108,18 +89,10 @@
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/JumpKick/attackCa006.png" type="Texture" id=106]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/JumpKick/attackCa005.png" type="Texture" id=107]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/JumpKick/attackCa004.png" type="Texture" id=108]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Burst/attackCf003.png" type="Texture" id=109]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Burst/attackCf008.png" type="Texture" id=110]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/AirAttack/attackBa004.png" type="Texture" id=111]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Burst/attackCf001.png" type="Texture" id=112]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Burst/attackCf002.png" type="Texture" id=113]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/AirAttack/attackC004.png" type="Texture" id=111]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DashForward/dashFront000.png" type="Texture" id=114]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Burst/attackCf000.png" type="Texture" id=115]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Burst/attackCf004.png" type="Texture" id=116]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DashForward/dashFront004.png" type="Texture" id=117]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/AirAttack/attackBc000.png" type="Texture" id=118]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Burst/attackCf007.png" type="Texture" id=119]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Burst/attackCf006.png" type="Texture" id=120]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/AirAttack/attackC002.png" type="Texture" id=118]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/HurtAerial/hitAir003.png" type="Texture" id=121]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/HurtAerial/hitAir006.png" type="Texture" id=122]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/HurtAerial/hitAir000.png" type="Texture" id=123]
@@ -133,26 +106,26 @@
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Grabbed/crash002.png" type="Texture" id=131]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Getup/standUp003.png" type="Texture" id=132]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Getup/standUp005.png" type="Texture" id=133]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/AirAttack/attackBc002.png" type="Texture" id=134]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/AirAttack/attackC003.png" type="Texture" id=134]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/ForwardThrow/attackCc009.png" type="Texture" id=135]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/AirAttack/attackBd001.png" type="Texture" id=136]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/AirAttack/attackC008.png" type="Texture" id=136]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Grab/attackCc003.png" type="Texture" id=137]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/ForwardThrow/attackCc004.png" type="Texture" id=138]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/ForwardThrow/attackCc005.png" type="Texture" id=139]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/AirAttack/attackBe000.png" type="Texture" id=140]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/AirAttack/attackC005.png" type="Texture" id=140]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Knockdown/down001.png" type="Texture" id=141]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Knockdown/down005.png" type="Texture" id=142]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Landing/landing.png" type="Texture" id=143]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Knockdown/down002.png" type="Texture" id=144]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Knockdown/down006.png" type="Texture" id=145]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/AirAttack/attackBe001.png" type="Texture" id=146]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/AirAttack/attackC009.png" type="Texture" id=146]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DoubleJump/jump002.png" type="Texture" id=147]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DoubleJump/jump003.png" type="Texture" id=148]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DoubleJump/jump000.png" type="Texture" id=149]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DoubleJump/jump007.png" type="Texture" id=150]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DoubleJump/jump001.png" type="Texture" id=151]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DoubleJump/jump004.png" type="Texture" id=152]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/AirAttack/attackBc001.png" type="Texture" id=153]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Wait/stand007.png" type="Texture" id=153]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DiveKick/spellBb006.png" type="Texture" id=154]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DiveKick/spellBb007.png" type="Texture" id=155]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DiveKick/spellBb008.png" type="Texture" id=156]
@@ -161,55 +134,46 @@
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DiveKick/spellBb009.png" type="Texture" id=159]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DiveKick/spellBb002.png" type="Texture" id=160]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DiveKick/spellBb001.png" type="Texture" id=161]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/AirUpwardPunch/shotCa003.png" type="Texture" id=162]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/AirUpwardPunch/shotCa004.png" type="Texture" id=163]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/AirUpwardPunch/shotCa005.png" type="Texture" id=164]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/AirUpwardPunch/shotCa006.png" type="Texture" id=165]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/AirUpwardPunch/shotCa007.png" type="Texture" id=166]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/States/DiveKick.gd" type="Script" id=167]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/States/AirUpwardPunch.gd" type="Script" id=168]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/States/AirAttack.gd" type="Script" id=169]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Wait/stand001.png" type="Texture" id=162]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Wait/stand005.png" type="Texture" id=163]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Wait/stand009.png" type="Texture" id=164]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Wait/stand002.png" type="Texture" id=165]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Wait/stand006.png" type="Texture" id=166]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/States/ShotBasic.gd" type="Script" id=167]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Wait/stand004.png" type="Texture" id=168]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/States/DropKick.gd" type="Script" id=169]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DropKick/spellBc002.png" type="Texture" id=170]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DropKick/spellBc003.png" type="Texture" id=171]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DropKick/spellBc001.png" type="Texture" id=172]
 [ext_resource path="res://fx/DashFloorParticle.tscn" type="PackedScene" id=173]
 [ext_resource path="res://sound/common/dash1.wav" type="AudioStream" id=174]
-[ext_resource path="res://sound/common/hit2.wav" type="AudioStream" id=175]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Wait/stand008.png" type="Texture" id=175]
 [ext_resource path="res://characters/stickman/sprites/actionicons/slide_kick.png" type="Texture" id=176]
 [ext_resource path="res://characters/stickman/states/SlideKick.gd" type="Script" id=177]
 [ext_resource path="res://HurtboxState.gd" type="Script" id=178]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/SlideKick/attackCb004.png" type="Texture" id=179]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/SlideKick/attackCb003.png" type="Texture" id=180]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Wait/spellAa003.png" type="Texture" id=181]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Wait/spellAa004.png" type="Texture" id=182]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Wait/spellAa001.png" type="Texture" id=183]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Shot1/shotAa002.png" type="Texture" id=184]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Shot1/shotAa004.png" type="Texture" id=185]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Shot1/shotAa003.png" type="Texture" id=186]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Shot1/shotAa005.png" type="Texture" id=187]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Shot1/shotAa001.png" type="Texture" id=188]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Shot1/shotAa000.png" type="Texture" id=189]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Shot1/shotAa006.png" type="Texture" id=190]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Shot1/shotAa008.png" type="Texture" id=191]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Shot1/shotAa007.png" type="Texture" id=192]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Wait/spellAa002.png" type="Texture" id=193]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Wait/stand003.png" type="Texture" id=181]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/States/DownKick.gd" type="Script" id=182]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/States/ForwardCharge.gd" type="Script" id=183]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/States/DiveKick.gd" type="Script" id=193]
 [ext_resource path="res://ui/ActionSelector/StateIcons/dropkick.png" type="Texture" id=194]
 [ext_resource path="res://characters/wizard/sprites/actionbuttons/magic_missile.png" type="Texture" id=195]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/States/DownKick.gd" type="Script" id=196]
+[ext_resource path="res://HongMeiling/characters/HongMeiling/ActionUiData/ReimuShotActionUIData.tscn" type="PackedScene" id=196]
 [ext_resource path="res://ui/ActionSelector/StateIcons/punch.png" type="Texture" id=197]
-[ext_resource path="res://characters/swordandgun/sprites/action_buttons/upward_swipe.png" type="Texture" id=198]
-[ext_resource path="res://HakureiReimu/characters/HakureiReimu/ActionUiData/MeilingShotActionUIData.tscn" type="PackedScene" id=199]
+[ext_resource path="res://HongMeiling/characters/HongMeiling/States/ShotBlank.gd" type="Script" id=198]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Start/spellCall009.png" type="Texture" id=199]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Hustle/emotionAa001.png" type="Texture" id=200]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sounds/bc.wav" type="AudioStream" id=201]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/States/MeilingTaunt.gd" type="Script" id=202]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Start/spellCall006.png" type="Texture" id=203]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Start/spellCall001.png" type="Texture" id=204]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Start/spellCall000.png" type="Texture" id=205]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Start/spellCall003.png" type="Texture" id=206]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Start/spellCall004.png" type="Texture" id=207]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Start/spellCall002.png" type="Texture" id=208]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Start/spellCall005.png" type="Texture" id=209]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Start/spellCall007.png" type="Texture" id=210]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Start/spellCall011.png" type="Texture" id=203]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Start/spellCall005.png" type="Texture" id=204]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Start/spellCall000.png" type="Texture" id=205]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Start/spellCall001.png" type="Texture" id=206]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Start/spellCall008.png" type="Texture" id=207]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Start/spellCall010.png" type="Texture" id=208]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Start/spellCall006.png" type="Texture" id=209]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Start/spellCall002.png" type="Texture" id=210]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/States/Start.gd" type="Script" id=211]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/SlideKick/attackCb006.png" type="Texture" id=212]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/SlideKick/attackCb001.png" type="Texture" id=213]
@@ -230,22 +194,21 @@
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DownKick/jump003.png" type="Texture" id=228]
 [ext_resource path="res://characters/robo/sprites/actionicons/air_kick.png" type="Texture" id=229]
 [ext_resource path="res://characters/stickman/sprites/actionicons/stomp.png" type="Texture" id=230]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/ActionUiData/MeilingDownKickActionUIData.tscn" type="PackedScene" id=231]
+[ext_resource path="res://HongMeiling/characters/HongMeiling/ActionUiData/ReimuDownKickActionUIData.tscn" type="PackedScene" id=231]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sounds/se_tan01.wav" type="AudioStream" id=232]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/States/ShotBasic.gd" type="Script" id=233]
-[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Shot1.tscn" type="PackedScene" id=234]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Start/spellCall003.png" type="Texture" id=233]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Start/spellCall004.png" type="Texture" id=234]
+[ext_resource path="res://HakureiReimu/characters/HakureiReimu/Sprites/Start/spellCall007.png" type="Texture" id=235]
 [ext_resource path="res://sound/common/hit4.wav" type="AudioStream" id=238]
 [ext_resource path="res://sound/common/hit3.wav" type="AudioStream" id=239]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DashForward/dashFront002.png" type="Texture" id=240]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/DashForward/dashFront003.png" type="Texture" id=241]
 [ext_resource path="res://characters/swordandgun/sprites/action_buttons/h_slash.png" type="Texture" id=242]
-[ext_resource path="res://characters/swordandgun/sprites/action_buttons/DownwardCleave.png" type="Texture" id=243]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Tetsuzanko/attackBa001.png" type="Texture" id=244]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Tetsuzanko/attackBa003.png" type="Texture" id=245]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Tetsuzanko/attackBa004.png" type="Texture" id=246]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Tetsuzanko/attackBa000.png" type="Texture" id=247]
 [ext_resource path="res://HongMeiling/characters/HongMeiling/Sprites/Tetsuzanko/attackBa002.png" type="Texture" id=248]
-[ext_resource path="res://HongMeiling/characters/HongMeiling/States/ForwardCharge.gd" type="Script" id=249]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
@@ -267,27 +230,17 @@ shader_param/outline_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="SpriteFrames" id=3]
 animations = [ {
-"frames": [ ExtResource( 111 ), ExtResource( 118 ), ExtResource( 153 ), ExtResource( 134 ), ExtResource( 14 ), ExtResource( 1 ), ExtResource( 12 ), ExtResource( 136 ), ExtResource( 140 ), ExtResource( 146 ), ExtResource( 13 ) ],
+"frames": [ ExtResource( 13 ), ExtResource( 14 ), ExtResource( 118 ), ExtResource( 134 ), ExtResource( 111 ), ExtResource( 140 ), ExtResource( 1 ), ExtResource( 12 ), ExtResource( 136 ), ExtResource( 146 ) ],
 "loop": true,
 "name": "AirAttack",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 27 ), ExtResource( 27 ), ExtResource( 27 ), ExtResource( 27 ), ExtResource( 27 ), ExtResource( 27 ), ExtResource( 27 ), ExtResource( 27 ), ExtResource( 27 ), ExtResource( 27 ), ExtResource( 27 ), ExtResource( 27 ), ExtResource( 30 ) ],
-"loop": true,
-"name": "AirFireball",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 39 ), ExtResource( 44 ), ExtResource( 50 ), ExtResource( 162 ), ExtResource( 163 ), ExtResource( 164 ), ExtResource( 165 ), ExtResource( 166 ) ],
-"loop": true,
-"name": "AirUpwardPunch",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 85 ), ExtResource( 83 ), ExtResource( 82 ), ExtResource( 84 ) ],
+"frames": [ ExtResource( 39 ), ExtResource( 84 ), ExtResource( 50 ), ExtResource( 82 ), ExtResource( 44 ), ExtResource( 83 ), ExtResource( 85 ) ],
 "loop": true,
 "name": "AttackJab",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 115 ), ExtResource( 112 ), ExtResource( 113 ), ExtResource( 109 ), ExtResource( 116 ), ExtResource( 17 ), ExtResource( 120 ), ExtResource( 119 ), ExtResource( 110 ) ],
+"frames": [ ExtResource( 60 ), ExtResource( 61 ), ExtResource( 17 ), ExtResource( 55 ), ExtResource( 59 ), ExtResource( 30 ), ExtResource( 58 ) ],
 "loop": true,
 "name": "Burst",
 "speed": 5.0
@@ -417,26 +370,6 @@ animations = [ {
 "name": "Landing",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 58 ), ExtResource( 58 ), ExtResource( 58 ), ExtResource( 58 ), ExtResource( 58 ), ExtResource( 58 ), ExtResource( 58 ), ExtResource( 58 ), ExtResource( 77 ), ExtResource( 77 ), ExtResource( 77 ), ExtResource( 55 ), ExtResource( 55 ), ExtResource( 55 ), ExtResource( 77 ), ExtResource( 77 ), ExtResource( 77 ), ExtResource( 68 ) ],
-"loop": true,
-"name": "NunChukHeavy",
-"speed": 60.0
-}, {
-"frames": [ ExtResource( 72 ), ExtResource( 72 ), ExtResource( 72 ), ExtResource( 72 ), ExtResource( 72 ), ExtResource( 72 ), ExtResource( 72 ), ExtResource( 72 ), ExtResource( 72 ), ExtResource( 72 ), ExtResource( 72 ), ExtResource( 72 ), ExtResource( 72 ), ExtResource( 72 ), ExtResource( 72 ), ExtResource( 62 ), ExtResource( 62 ), ExtResource( 62 ), ExtResource( 62 ), ExtResource( 78 ) ],
-"loop": true,
-"name": "NunChukJump",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 69 ), ExtResource( 69 ), ExtResource( 69 ), ExtResource( 69 ), ExtResource( 69 ), ExtResource( 67 ), ExtResource( 67 ), ExtResource( 67 ), ExtResource( 65 ) ],
-"loop": true,
-"name": "NunChukLight",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 73 ), ExtResource( 73 ), ExtResource( 73 ), ExtResource( 74 ), ExtResource( 74 ), ExtResource( 61 ), ExtResource( 61 ), ExtResource( 61 ), ExtResource( 61 ), ExtResource( 60 ), ExtResource( 60 ), ExtResource( 60 ), ExtResource( 59 ), ExtResource( 59 ), ExtResource( 59 ), ExtResource( 59 ), ExtResource( 75 ), ExtResource( 75 ), ExtResource( 75 ), ExtResource( 61 ), ExtResource( 61 ), ExtResource( 61 ), ExtResource( 61 ), ExtResource( 60 ), ExtResource( 60 ), ExtResource( 60 ), ExtResource( 63 ), ExtResource( 63 ), ExtResource( 63 ), ExtResource( 63 ) ],
-"loop": true,
-"name": "NunChukSpin",
-"speed": 60.0
-}, {
 "frames": [ ExtResource( 51 ) ],
 "loop": true,
 "name": "ParryHigh",
@@ -446,11 +379,6 @@ animations = [ {
 "loop": true,
 "name": "ParryLow",
 "speed": 5.0
-}, {
-"frames": [ ExtResource( 76 ), ExtResource( 76 ), ExtResource( 76 ), ExtResource( 76 ), ExtResource( 64 ), ExtResource( 71 ) ],
-"loop": true,
-"name": "QuickSlash",
-"speed": 60.0
 }, {
 "frames": [ ExtResource( 41 ), ExtResource( 105 ), ExtResource( 40 ), ExtResource( 47 ), ExtResource( 42 ), ExtResource( 43 ) ],
 "loop": true,
@@ -462,7 +390,7 @@ animations = [ {
 "name": "RollForward",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 189 ), ExtResource( 188 ), ExtResource( 184 ), ExtResource( 186 ), ExtResource( 185 ), ExtResource( 187 ), ExtResource( 190 ), ExtResource( 192 ), ExtResource( 191 ) ],
+"frames": [ ExtResource( 20 ), ExtResource( 89 ), ExtResource( 23 ), ExtResource( 80 ), ExtResource( 21 ) ],
 "loop": true,
 "name": "Shot1",
 "speed": 5.0
@@ -477,7 +405,7 @@ animations = [ {
 "name": "SlideKick",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 205 ), ExtResource( 204 ), ExtResource( 208 ), ExtResource( 206 ), ExtResource( 207 ), ExtResource( 209 ), ExtResource( 203 ), ExtResource( 210 ) ],
+"frames": [ ExtResource( 205 ), ExtResource( 206 ), ExtResource( 210 ), ExtResource( 233 ), ExtResource( 234 ), ExtResource( 204 ), ExtResource( 209 ), ExtResource( 235 ), ExtResource( 207 ), ExtResource( 199 ), ExtResource( 208 ), ExtResource( 203 ) ],
 "loop": true,
 "name": "Start",
 "speed": 5.0
@@ -492,17 +420,12 @@ animations = [ {
 "name": "ThrowTech",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 90 ), ExtResource( 20 ), ExtResource( 95 ), ExtResource( 100 ), ExtResource( 21 ), ExtResource( 93 ), ExtResource( 4 ), ExtResource( 89 ), ExtResource( 23 ) ],
-"loop": true,
-"name": "Uppercut",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 183 ), ExtResource( 193 ), ExtResource( 181 ), ExtResource( 182 ) ],
+"frames": [ ExtResource( 79 ), ExtResource( 162 ), ExtResource( 165 ), ExtResource( 181 ), ExtResource( 168 ), ExtResource( 163 ), ExtResource( 166 ), ExtResource( 153 ), ExtResource( 175 ), ExtResource( 164 ) ],
 "loop": true,
 "name": "Wait",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 80 ) ],
+"frames": [ ExtResource( 4 ) ],
 "loop": true,
 "name": "WallSlam",
 "speed": 5.0
@@ -514,8 +437,9 @@ character_portrait = ExtResource( 79 )
 
 [node name="Sprite" parent="Flip" index="0"]
 material = SubResource( 2 )
+position = Vector2( 0, 5 )
 frames = SubResource( 3 )
-animation = "ShoulderCheck"
+animation = "Start"
 
 [node name="Start" parent="StateMachine" index="0"]
 script = ExtResource( 211 )
@@ -552,7 +476,10 @@ sfx = ExtResource( 201 )
 sfx_volume = 0.0
 
 [node name="AttackJab" type="Node2D" parent="StateMachine" index="47"]
-script = ExtResource( 86 )
+script = ExtResource( 35 )
+__meta__ = {
+"_editor_description_": ""
+}
 apply_forces = true
 apply_fric = true
 apply_grav = true
@@ -579,10 +506,10 @@ script = ExtResource( 87 )
 __meta__ = {
 "_editor_description_": ""
 }
-x = 17
-y = -24
-width = 16
-height = 8
+x = 7
+y = -14
+width = 7
+height = 14
 damage = 30
 hitstun_ticks = 12
 victim_hitlag = 4
@@ -592,52 +519,8 @@ knockback = "2.0"
 start_tick = 4
 active_ticks = 2
 
-[node name="ShoulderCheck" type="Node2D" parent="StateMachine" index="48"]
-script = ExtResource( 86 )
-apply_forces = true
-apply_fric = true
-apply_grav = true
-sprite_animation = "ShoulderCheck"
-anim_length = 13
-ticks_per_frame = 2
-force_dir_x = "2"
-force_speed = "2"
-force_tick = 5
-title = "Tetsuzanko"
-type = 1
-button_texture = ExtResource( 243 )
-self_hit_cancellable = false
-self_interruptable = false
-interrupt_from_string = "Grounded
-GroundedAttack
-Aerial
-AerialAttack"
-interrupt_into_string = "Grounded
-Aerial"
-hit_cancel_into_string = "Grounded
-Aerial"
-
-[node name="Hitbox" type="Node2D" parent="StateMachine/ShoulderCheck" index="0"]
-z_index = 1000
-script = ExtResource( 87 )
-__meta__ = {
-"_editor_description_": ""
-}
-x = 17
-y = -24
-width = 16
-height = 8
-damage = 50
-hitstun_ticks = 12
-victim_hitlag = 4
-damage_proration = 2
-di_modifier = "10"
-knockback = "2.0"
-start_tick = 4
-active_ticks = 2
-
-[node name="ForwardCharge" type="Node2D" parent="StateMachine" index="49"]
-script = ExtResource( 249 )
+[node name="ForwardCharge" type="Node2D" parent="StateMachine" index="48"]
+script = ExtResource( 183 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -682,8 +565,11 @@ knockback = "2.0"
 start_tick = 4
 active_ticks = 20
 
-[node name="DropKick" type="Node2D" parent="StateMachine" index="50"]
-script = ExtResource( 35 )
+[node name="DropKick" type="Node2D" parent="StateMachine" index="49"]
+script = ExtResource( 169 )
+__meta__ = {
+"_editor_description_": ""
+}
 apply_forces = true
 apply_fric = true
 apply_grav = true
@@ -726,8 +612,11 @@ knockback = "13.0"
 wall_slam = true
 start_tick = 7
 
-[node name="DiveKick" type="Node2D" parent="StateMachine" index="51"]
-script = ExtResource( 167 )
+[node name="DiveKick" type="Node2D" parent="StateMachine" index="50"]
+script = ExtResource( 193 )
+__meta__ = {
+"_editor_description_": ""
+}
 apply_forces = true
 apply_fric = true
 apply_grav = true
@@ -765,8 +654,8 @@ hitstun_ticks = 45
 start_tick = 10
 active_ticks = 6
 
-[node name="DownKick" type="Node2D" parent="StateMachine" index="52"]
-script = ExtResource( 196 )
+[node name="DownKick" type="Node2D" parent="StateMachine" index="51"]
+script = ExtResource( 182 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -818,47 +707,11 @@ hitstun_ticks = 5
 start_tick = 10
 active_ticks = 10
 
-[node name="AirUpwardPunch" type="Node2D" parent="StateMachine" index="53"]
-script = ExtResource( 168 )
-apply_forces = true
-apply_fric = true
-apply_grav = true
-sprite_animation = "AirUpwardPunch"
-anim_length = 36
-ticks_per_frame = 2
-force_dir_x = "2"
-force_speed = "2"
-force_tick = 5
-title = "AirUpwardPunch"
-type = 1
-button_texture = ExtResource( 198 )
-air_type = 2
-combo_only = true
-self_interruptable = false
-interrupt_from_string = "Grounded
-GroundedAttack
-Aerial
-AerialAttack"
-interrupt_into_string = "Grounded
-Aerial"
-hit_cancel_into_string = "Grounded
-Aerial"
-
-[node name="Hitbox" type="Node2D" parent="StateMachine/AirUpwardPunch" index="0"]
-z_index = 1000
-script = ExtResource( 87 )
-x = 20
-y = -33
-width = 10
-height = 10
-damage = 50
-minimum_damage = 20
-hitstun_ticks = 20
-start_tick = 7
-active_ticks = 3
-
-[node name="AirAttack" type="Node2D" parent="StateMachine" index="54"]
-script = ExtResource( 169 )
+[node name="AirAttack" type="Node2D" parent="StateMachine" index="52"]
+script = ExtResource( 86 )
+__meta__ = {
+"_editor_description_": ""
+}
 apply_forces = true
 apply_fric = true
 apply_grav = true
@@ -885,8 +738,8 @@ AerialAttack"
 [node name="Hitbox" type="Node2D" parent="StateMachine/AirAttack" index="0"]
 z_index = 1000
 script = ExtResource( 87 )
-x = 15
-y = -23
+x = 19
+y = -31
 width = 15
 height = 7
 damage = 100
@@ -895,7 +748,7 @@ hitstun_ticks = 20
 start_tick = 7
 active_ticks = 3
 
-[node name="SlideKick" type="Node2D" parent="StateMachine" index="55"]
+[node name="SlideKick" type="Node2D" parent="StateMachine" index="53"]
 script = ExtResource( 177 )
 apply_grav = true
 sprite_animation = "SlideKick"
@@ -962,73 +815,8 @@ start_tick = 3
 active_ticks = 6
 endless = true
 
-[node name="SlideKickAir" type="Node2D" parent="StateMachine" index="56"]
-script = ExtResource( 177 )
-apply_grav = true
-sprite_animation = "SlideKick"
-anim_length = 34
-ticks_per_frame = 2
-force_dir_x = "1.0"
-force_speed = "12.0"
-particle_scene = ExtResource( 173 )
-spawn_particle_on_enter = true
-enter_sfx = ExtResource( 174 )
-enter_sfx_volume = -10.0
-title = "Slide Kick"
-type = 1
-button_texture = ExtResource( 176 )
-air_type = 1
-self_interruptable = false
-interrupt_from_string = "Grounded
-GroundedAttack
-Aerial
-AerialAttack"
-interrupt_into_string = "Grounded
-Aerial"
-hit_cancel_into_string = "GroundedAttack
-GroundedSpecial
-GroundedSuper
-AerialAttack
-AerialSpecial
-AerialSuper"
-allowed_stances_string = "BackSway"
-change_stance_to = "Normal"
-
-[node name="Hitbox" type="Node2D" parent="StateMachine/SlideKickAir" index="0"]
-z_index = 1000
-script = ExtResource( 87 )
-x = 15
-y = -4
-width = 19
-height = -4
-damage = 70
-minimum_damage = 15
-hitstun_ticks = 17
-hitlag_ticks = 7
-cancellable = false
-hit_height = 2
-hit_sound = ExtResource( 175 )
-dir_x = "-1.0"
-knockback = "7.0"
-grounded_hit_state = "HurtAerial"
-knockdown = true
-knockdown_extends_hitstun = false
-start_tick = 7
-active_ticks = 8
-
-[node name="HurtboxState" type="Node2D" parent="StateMachine/SlideKickAir" index="1"]
-z_index = 1000
-script = ExtResource( 178 )
-x = 3
-y = -9
-width = 19
-height = 9
-start_tick = 3
-active_ticks = 6
-endless = true
-
-[node name="ShotScripted" type="Node2D" parent="StateMachine" index="57"]
-script = ExtResource( 233 )
+[node name="ShotScripted" type="Node2D" parent="StateMachine" index="54"]
+script = ExtResource( 167 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -1042,22 +830,21 @@ force_speed = "2"
 force_tick = 10
 sfx = ExtResource( 232 )
 sfx_volume = -10.0
-projectile_scene = ExtResource( 234 )
 projectile_pos_x = 17
 projectile_pos_y = -21
 title = "Danmaku1"
 type = 2
-data_ui_scene = ExtResource( 199 )
+data_ui_scene = ExtResource( 196 )
 button_texture = ExtResource( 195 )
-air_type = 1
+air_type = 2
 interruptible_on_opponent_turn = true
 interrupt_from_string = "Aerial
 AerialAttack"
 interrupt_into_string = "Aerial"
 hit_cancel_into_string = "Aerial"
 
-[node name="ShotUnscripted" type="Node2D" parent="StateMachine" index="58"]
-script = ExtResource( 233 )
+[node name="ShotUnscripted" type="Node2D" parent="StateMachine" index="55"]
+script = ExtResource( 198 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -1075,8 +862,9 @@ projectile_pos_x = 17
 projectile_pos_y = -21
 title = "Danmaku1"
 type = 2
+data_ui_scene = ExtResource( 196 )
 button_texture = ExtResource( 195 )
-air_type = 2
+air_type = 1
 interruptible_on_opponent_turn = true
 interrupt_from_string = "Aerial
 AerialAttack"
