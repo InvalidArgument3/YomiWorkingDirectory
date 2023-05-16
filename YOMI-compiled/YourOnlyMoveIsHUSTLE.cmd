@@ -1,2 +1,0 @@
-YourOnlyMoveIsHUSTLE.exe
-PAUSE >nul
