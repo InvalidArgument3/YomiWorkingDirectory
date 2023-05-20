@@ -27,6 +27,7 @@ func _ready():
 var parry_active = false
 var perfect = true
 
+
 func _frame_0():
 	host.end_throw_invulnerability()
 	started_in_combo = host.combo_count > 0
@@ -59,7 +60,8 @@ func parry(perfect = true):
 	else :
 		parry_type = ParryHeight.Both
 		host.start_throw_invulnerability()
-	interruptible_on_opponent_turn = true
+
+
 	host.parried = true
 	parried = true
 	self.perfect = perfect

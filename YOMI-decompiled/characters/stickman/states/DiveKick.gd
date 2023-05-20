@@ -16,6 +16,11 @@ var moving = false
 func _frame_0():
 	var vel = host.get_vel()
 	var new_vel = fixed.mul(vel.x, MOMENTUM_REDUCTION)
+	if not (data is Dictionary):
+		data = {
+			x = 1, 
+			y = 1, 
+		}
 	host.set_vel(new_vel, "0")
 	moving = false
 	move_x_modifier = abs(data.x) * x_modifier_amount

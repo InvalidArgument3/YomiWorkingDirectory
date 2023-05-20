@@ -6,11 +6,17 @@ onready var fast_fall_button = $"%FastFallButton"
 onready var orb_push = $"%OrbPush"
 onready var explode_button = $"%ExplodeButton"
 
+
+
+
 func _ready():
 	hover_button.connect("toggled", self, "_on_hover_button_toggled")
 	fast_fall_button.connect("toggled", self, "_on_fast_fall_button_toggled")
 	orb_push.connect("data_changed", self, "emit_signal", ["data_changed"])
+
 	explode_button.connect("pressed", self, "emit_signal", ["data_changed"])
+
+
 
 
 func _on_hover_button_toggled(on):
@@ -23,6 +29,9 @@ func _on_fast_fall_button_toggled(on):
 		hover_button.set_pressed_no_signal(false)
 	emit_signal("data_changed")
 
+func _on_shoot_button_toggled(on):
+	$"%LaunchDir".visible = on
+
 func reset():
 	orb_push.set_dir("Neutral")
 	var is_hurt = fighter.current_state() != CharacterHurtState
@@ -30,11 +39,13 @@ func reset():
 	fast_fall_button.set_pressed_no_signal(fighter.fast_falling and is_hurt)
 	hover_button.set_pressed_no_signal(fighter.hovering and is_hurt)
 
+
 func show_options():
 	orb_push.hide()
 	orb_push.init()
 	explode_button.hide()
 	orb_push.visible = fighter.orb_projectile != null
+
 	hover_button.hide()
 	fast_fall_button.hide()
 	fast_fall_button.set_pressed_no_signal(fighter.fast_falling)
@@ -45,7 +56,7 @@ func show_options():
 
 	if fighter.can_hover() or fighter.hovering:
 		hover_button.show()
-	if not fighter.is_grounded():
+	if fighter.can_fast_fall():
 		fast_fall_button.show()
 	if fighter.spark_bombs:
 		explode_button.show()
@@ -56,5 +67,7 @@ func get_extra():
 		"fast_fall":fast_fall_button.pressed, 
 		"detonate":explode_button.pressed, 
 		"orb_push":orb_push.get_data(), 
+
+
 	}
 	return extra

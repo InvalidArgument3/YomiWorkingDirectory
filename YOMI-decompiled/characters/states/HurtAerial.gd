@@ -1,5 +1,7 @@
 extends CharacterHurtState
 
+class_name HurtAerial
+
 const AIR_FRIC = "0.015"
 const HIT_GRAV = "0.25"
 const HIT_FALL_SPEED = "15.0"
@@ -23,6 +25,8 @@ func begin_ground_bounce():
 	hitbox.dir_y = fixed.mul(hitbox.dir_y, "-1")
 	bounce_frames = BOUNCE_FRAMES
 	ground_bounced = true
+	host.play_sound("HitBass")
+
 
 func _enter():
 	ground_bounced = false
@@ -36,9 +40,20 @@ func _enter():
 	counter = hitbox.counter_hit
 	if (hitbox.ground_bounce and host.is_grounded()) and fixed.gt(hitbox.dir_y, "0"):
 		begin_ground_bounce()
-
+	
 	var x = get_x_dir(hitbox)
-	var knockback_force = fixed.normalized_vec_times(x, hitbox.dir_y, hitbox.knockback)
+	var y = hitbox.dir_y
+
+	if hitbox.vacuum:
+		var vacuum_dir = get_vacuum_dir(hitbox)
+		x = vacuum_dir.x
+		y = vacuum_dir.y
+	elif hitbox.send_away_from_center:
+		var vacuum_dir = get_vacuum_dir(hitbox)
+		x = fixed.mul(vacuum_dir.x, "-1")
+		y = fixed.mul(vacuum_dir.y, "-1")
+
+	var knockback_force = fixed.normalized_vec_times(x, y, hitbox.knockback)
 	
 	host.set_facing(Utils.int_sign(fixed.round(x)) * - 1)
 	var di = host.get_scaled_di(host.current_di)
@@ -48,11 +63,17 @@ func _enter():
 		di_force.y = "0"
 	else :
 		hitstun = di_shave_hitstun(hitstun, x, hitbox.dir_y)
+	
 
 	var force_x = fixed.add(knockback_force.x, di_force.x)
 	var force_y = fixed.add(knockback_force.y, di_force.y)
 	host.apply_force(force_x, force_y)
 	host.move_directly(0, - 1)
+	anim_name = "HurtAerial"
+
+func _frame_1():
+	if host.braced_attack:
+		hitstun = brace_shave_hitstun(hitstun)
 
 func _tick():
 	if host.is_grounded() and bounce_frames > 0:
@@ -106,16 +127,27 @@ func _tick():
 				begin_ground_bounce()
 				host.set_vel(vel.x, fixed.mul(vel.y, "-1"))
 			else :
-				if knockdown or host.hp == 0:
-					if hard_knockdown:
-						return "HardKnockdown"
+				if current_tick > hitbox.minimum_grounded_frames:
+					if knockdown or host.hp == 0:
+						if hard_knockdown:
+							return "HardKnockdown"
+						else :
+		
+							return "Knockdown"
 					else :
-	
+						if host.hp > 0:
+							return "Landing"
 						return "Knockdown"
-				else :
-					if host.hp > 0:
-						return "Landing"
-					return "Knockdown"
+				elif current_tick > 0:
+					match hitbox.hit_height:
+						Hitbox.HitHeight.High:
+							anim_name = "HurtGroundedHigh"
+						Hitbox.HitHeight.Mid:
+							anim_name = "HurtGroundedMid"
+						Hitbox.HitHeight.Low:
+							anim_name = "HurtGroundedLow"
+		else :
+			anim_name = "HurtAerial"
 				
 	var extended_hitstun = hitbox.knockdown_extends_hitstun and hitbox.knockdown and not ground_bounced
 	

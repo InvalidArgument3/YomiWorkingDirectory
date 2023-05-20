@@ -1,5 +1,7 @@
 extends CharacterHurtState
 
+class_name HurtGrounded
+
 const GROUND_FRIC = "0.05"
 const DI_STRENGTH = "3.5"
 
@@ -24,7 +26,17 @@ func _enter():
 	counter = hitbox.counter_hit
 	var x = get_x_dir(hitbox)
 	host.set_facing(Utils.int_sign(fixed.round(x)) * - 1)
-	var knockback_force = fixed.normalized_vec_times(x, hitbox.dir_y, hitbox.knockback)
+	var y = hitbox.dir_y
+	if hitbox.vacuum:
+		var vacuum_dir = get_vacuum_dir(hitbox)
+		x = vacuum_dir.x
+		y = vacuum_dir.y
+	elif hitbox.send_away_from_center:
+		var vacuum_dir = get_vacuum_dir(hitbox)
+		x = fixed.mul(vacuum_dir.x, "-1")
+		y = fixed.mul(vacuum_dir.y, "-1")
+
+	var knockback_force = fixed.normalized_vec_times(x, y, hitbox.knockback)
 	knockback_force.y = "0"
 	var di_force = fixed.vec_mul(host.get_scaled_di(host.current_di).x, "0", fixed.mul(DI_STRENGTH, hitbox.di_modifier))
 	if hitbox.hitbox_type == Hitbox.HitboxType.Burst:
@@ -32,6 +44,8 @@ func _enter():
 		di_force.y = "0"
 	else :
 		hitstun = di_shave_hitstun(hitstun, x, "0")
+	if host.braced_attack:
+		hitstun = brace_shave_hitstun(hitstun)
 	if host.touching_wall and not wall_slam:
 		knockback_force.x = "0"
 	var force_x = fixed.add(knockback_force.x, di_force.x)
@@ -64,3 +78,4 @@ func _tick():
 		else :
 			enable_interrupt()
 			can_act = true
+

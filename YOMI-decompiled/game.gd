@@ -142,6 +142,7 @@ var spectating = false
 var camera_zoom = 1.0
 
 
+
 func get_ticks_left():
 	return time - Utils.int_min(current_tick, time)
 
@@ -238,7 +239,13 @@ func on_particle_effect_spawned(fx:ParticleEffect):
 func on_object_spawned(obj:BaseObj):
 	objects.append(obj)
 	objects_node.add_child(obj)
+	obj.has_ceiling = has_ceiling
+	obj.ceiling_height = ceiling_height
 	obj.obj_name = str(objs_map.size() + 1)
+	obj.logic_rng = BetterRng.new()
+	var seed_ = hash(match_data.seed + (objs_map.size() + 1))
+	obj.logic_rng.seed = seed_
+	obj.logic_rng_seed = seed_
 	objs_map[obj.obj_name if obj.obj_name else obj.name] = obj
 	obj.objs_map = objs_map
 	obj.connect("tree_exited", self, "_on_obj_exit_tree", [obj])
@@ -328,9 +335,22 @@ func start_game(singleplayer:bool, match_data:Dictionary):
 		ceiling_height = match_data["ceiling_height"]
 	if match_data.has("prediction_enabled"):
 		prediction_enabled = match_data["prediction_enabled"]
+	p1.has_ceiling = has_ceiling
+	p2.has_ceiling = has_ceiling
+	p1.ceiling_height = ceiling_height
+	p2.ceiling_height = ceiling_height
+
+
+
 
 	p1.name = "P1"
 	p2.name = "P2"
+	p1.logic_rng = BetterRng.new()
+	p2.logic_rng = BetterRng.new()
+	p1.logic_rng.seed = hash(match_data.seed)
+	p1.logic_rng_seed = hash(match_data.seed)
+	p2.logic_rng.seed = hash(match_data.seed + 1)
+	p2.logic_rng_seed = hash(match_data.seed + 1)
 	p2.id = 2
 	p1.is_ghost = is_ghost
 	p2.is_ghost = is_ghost
@@ -448,7 +468,7 @@ func start_game(singleplayer:bool, match_data:Dictionary):
 		p2.gain_super_meter(meter_amount)
 
 func on_prediction(player):
-	_on_super_started(10, player)
+	_on_super_started(7, player)
 	prediction_effect = true
 	pass
 
@@ -540,12 +560,12 @@ func tick():
 	players[1].update_advantage()
 	players[0].tick()
 	players[1].tick()
-	
+
 	resolve_same_x_coordinate()
 	initialize_objects()
 	p1_data = p1.data
 	p2_data = p2.data
-	resolve_collisions()
+	resolve_collisions(players[0], players[1])
 	apply_hitboxes(players)
 	p1_data = p1.data
 	p2_data = p2.data
@@ -710,7 +730,7 @@ func resolve_same_x_coordinate():
 		player_to_move.set_x(player_to_move.get_pos().x + direction_to_move)
 		player_to_move.update_data()
 
-func resolve_collisions(step = 0):
+func resolve_collisions(p1, p2, step = 0):
 	p1.update_collision_boxes()
 	p2.update_collision_boxes()
 	var x_pos = p1.data.object_data.position_x
@@ -775,30 +795,30 @@ func resolve_collisions(step = 0):
 			p1.set_x( - stage_width + p1.collision_box.width)
 			p1.update_data()
 			p2.update_data()
-			return resolve_collisions(step + 1)
+			return resolve_collisions(p1, p2, step + 1)
 			
 		elif not p1.clipping_wall and x_pos + p1.collision_box.width > stage_width:
 			p1.set_x(stage_width - p1.collision_box.width)
 			p1.update_data()
 			p2.update_data()
-			return resolve_collisions(step + 1)
+			return resolve_collisions(p1, p2, step + 1)
 			
 		if not p2.clipping_wall and opp_x_pos - p2.collision_box.width < - stage_width:
 			p2.set_x( - stage_width + p2.collision_box.width)
 			p1.update_data()
 			p2.update_data()
-			return resolve_collisions(step + 1)
+			return resolve_collisions(p1, p2, step + 1)
 			
 		elif not p2.clipping_wall and opp_x_pos + p2.collision_box.width > stage_width:
 			p2.set_x(stage_width - p2.collision_box.width)
 			p1.update_data()
 			p2.update_data()
-			return resolve_collisions(step + 1)
+			return resolve_collisions(p1, p2, step + 1)
 		
 		if p1.is_colliding_with_opponent() and p2.is_colliding_with_opponent() and p1.collision_box.overlaps(p2.collision_box):
 			p1.update_data()
 			p2.update_data()
-			return resolve_collisions(step + 1)
+			return resolve_collisions(p1, p2, step + 1)
 
 func apply_hitboxes(players):
 	var px1 = players[0]
@@ -823,7 +843,6 @@ func apply_hitboxes(players):
 				p2_throwing = false
 	if p2_hit_by:
 		if not (p2_hit_by is ThrowBox):
-
 			p2_hit = true
 		else :
 			p1_throwing = true
@@ -831,7 +850,6 @@ func apply_hitboxes(players):
 				p1_throwing = false
 			if px2.throw_invulnerable:
 				p1_throwing = false
-
 
 	var clash_position = Vector2()
 	var clashed = false
@@ -885,10 +903,15 @@ func apply_hitboxes(players):
 		_spawn_particle_effect(preload("res://fx/ClashEffect.tscn"), clash_position)
 	else :
 		if p1_hit:
-				p1_hit_by.hit(px1)
+				if not (p1_throwing and not p1_hit_by.beats_grab):
+					p1_hit_by.hit(px1)
+				else :
+					p1_hit = false
 		if p2_hit:
-
-				p2_hit_by.hit(px2)
+				if not (p2_throwing and not p2_hit_by.beats_grab):
+					p2_hit_by.hit(px2)
+				else :
+					p2_hit = false
 
 	if not p2_hit and not p1_hit:
 		if p2_throwing and p1_throwing and px1.current_state().throw_techable and px2.current_state().throw_techable:
@@ -908,6 +931,11 @@ func apply_hitboxes(players):
 				can_hit = false
 			if not px2.is_grounded() and not p2_hit_by.hits_vs_aerial:
 				can_hit = false
+
+
+
+
+
 			if can_hit:
 				p2_hit_by.hit(px2)
 				if p2_hit_by.throw_state:
@@ -924,6 +952,11 @@ func apply_hitboxes(players):
 				can_hit = false
 			if not px1.is_grounded() and not p1_hit_by.hits_vs_aerial:
 				can_hit = false
+
+
+
+
+
 			if can_hit:
 				p1_hit_by.hit(px1)
 				if p1_hit_by.throw_state:
@@ -1243,6 +1276,7 @@ func _physics_process(_delta):
 			p1_super = false
 			p2_super = false
 			parry_freeze = false
+			prediction_effect = false
 
 	if not is_waiting_on_player():
 		emit_signal("simulation_continue")
@@ -1291,6 +1325,7 @@ func ghost_tick():
 	if ghost_speed == 1:
 		ghost_multiplier = 4
 	ghost_advantage_tick /= ghost_multiplier
+
 	for i in range(simulate_frames):
 		if ghost_actionable_freeze_ticks == 0:
 			simulate_one_tick()
@@ -1315,6 +1350,7 @@ func ghost_tick():
 			if p2.current_state().interruptible_on_opponent_turn or p2.feinting or negative_on_hit(p2):
 				p2.actionable_label.show()
 				ghost_p2_actionable = true
+				
 
 
 		if (p2.state_interruptable or p2.dummy_interruptable or p2.state_hit_cancellable) and not ghost_p2_actionable:
@@ -1335,6 +1371,7 @@ func ghost_tick():
 			if p1.current_state().interruptible_on_opponent_turn or p1.feinting or negative_on_hit(p1):
 				ghost_p1_actionable = true
 				p1.actionable_label.show()
+				
 
 
 

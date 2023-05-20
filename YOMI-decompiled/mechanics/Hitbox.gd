@@ -20,6 +20,7 @@ enum HitboxType{
 	ThrowHit, 
 	OffensiveBurst, 
 	Burst, 
+	NoHitstun, 
 }
 
 
@@ -37,6 +38,7 @@ export  var _c_Damage = 0
 export  var damage:int = 0
 export  var damage_in_combo:int = - 1
 export  var minimum_damage:int = 0
+export  var chip_damage_modifier = "1.0"
 
 export  var _c_Hit_Properties = 0
 export (HitboxType) var hitbox_type = HitboxType.Normal
@@ -45,6 +47,7 @@ export  var combo_hitstun_ticks:int = - 1
 export  var hitlag_ticks:int = 4
 export  var victim_hitlag:int = - 1
 export  var damage_proration:int = 0
+export  var scale_combo = true
 export  var cancellable = true
 export  var increment_combo = true
 export  var hits_otg = false
@@ -60,6 +63,8 @@ export  var followup_state = ""
 export  var force_grounded = false
 export  var can_clash = true
 export  var hits_vs_dizzy = true
+export  var beats_grab = true
+export (int, 0, 1024) var plus_frames = 0
 
 export (HitHeight) var hit_height = HitHeight.Mid
 
@@ -95,12 +100,15 @@ export  var dir_x:String = "1.0"
 export  var dir_y:String = "-1.0"
 export  var knockback:String = "10.0"
 export  var launch_reversible = false
-
+export  var vacuum = false
+export  var send_away_from_center = false
+export  var block_pushback_modifier:String = "1.0"
 export  var pushback_x:String = "1.0"
 
 export  var _c_Knockback_Type = 0
 export  var grounded_hit_state = "HurtGrounded"
 export  var aerial_hit_state = "HurtAerial"
+export  var minimum_grounded_frames = - 1
 export  var knockdown = false
 export  var knockdown_extends_hitstun = true
 export  var hard_knockdown = false
@@ -212,7 +220,7 @@ func to_data():
 	return HitboxData.new(self)
 
 func is_counter_hit():
-	return can_counter_hit and (host.is_in_group("Fighter") and host.initiative and host.opponent.current_state().has_hitboxes and host.opponent.current_state().can_be_counterhit)
+	return can_counter_hit and (host.is_in_group("Fighter") and host.initiative and host.opponent.current_state().has_hitboxes and host.opponent.current_state().can_be_counterhit) or (host.is_in_group("Fighter") and host.opponent.current_state().is_brace and not host.opponent.can_counter_hitbox(self))
 
 func spawn_whiff_particle():
 	if whiff_particle:
@@ -284,14 +292,17 @@ func hit(obj):
 		var can_hit = true
 		if obj.is_in_group("Fighter"):
 			if host.is_in_group("Fighter"):
-				host.feinting = false
-				host.current_state().feinting = false
+				if host.current_state().end_feint:
+					host.feinting = false
+					host.current_state().feinting = false
 			if not host.is_ghost:
 				if not bump_on_whiff:
 					camera.bump(camera_bump_dir, screenshake_amount, Utils.frames(victim_hitlag if screenshake_frames < 0 else screenshake_frames) * float(obj.global_hitstop_modifier))
 			if obj.can_parry_hitbox(self) or name in obj.parried_hitboxes:
 				can_hit = false
 				emit_signal("got_parried")
+			if obj.can_counter_hitbox(self):
+				can_hit = false
 			if obj.on_the_ground:
 				if not hits_otg:
 					can_hit = false

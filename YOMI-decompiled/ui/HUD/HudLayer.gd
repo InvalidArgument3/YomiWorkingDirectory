@@ -152,8 +152,8 @@ func _physics_process(_delta):
 		p2_prev_super = p2.supers_available
 		p1_num_supers.texture.current_frame = clamp(p1.supers_available, 0, 9)
 		p2_num_supers.texture.current_frame = clamp(p2.supers_available, 0, 9)
-		p1_combo_counter.set_combo(str(p1.combo_count))
-		p2_combo_counter.set_combo(str(p2.combo_count))
+		p1_combo_counter.set_combo(str(p1.visible_combo_count))
+		p2_combo_counter.set_combo(str(p2.visible_combo_count))
 
 		if is_instance_valid(game.ghost_game):
 			p1_ghost_health_bar.visible = true
@@ -181,19 +181,19 @@ func _physics_process(_delta):
 		$"%P1ShowStyle".visible = game.game_paused and p1.applied_style != null
 		$"%P2ShowStyle".visible = game.game_paused and p2.applied_style != null
 
-		if not ReplayManager.playback or p1.combo_count > 1:
+		if not ReplayManager.playback or p1.visible_combo_count > 1:
 			$"%P1DmgLabel".text = str(p1.combo_damage * 10) + " DMG"
 		else :
 			$"%P1DmgLabel".text = ""
 		$"%P1DmgLabel".visible = p1.combo_damage > 0
-		if not ReplayManager.playback or p2.combo_count > 1:
+		if not ReplayManager.playback or p2.visible_combo_count > 1:
 			$"%P2DmgLabel".text = str(p2.combo_damage * 10) + " DMG"
 		else :
 			$"%P2DmgLabel".text = ""
 		$"%P2DmgLabel".visible = p2.combo_damage > 0
 
-		$"%P1HitLabel".visible = p1.combo_count >= 2
-		$"%P2HitLabel".visible = p2.combo_count >= 2
+		$"%P1HitLabel".visible = p1.visible_combo_count >= 2
+		$"%P2HitLabel".visible = p2.visible_combo_count >= 2
 	
 		$"%Timer".text = str(game.get_ticks_left())
 		$"%SuperDim".visible = game.super_active and not game.parry_freeze
@@ -203,8 +203,8 @@ func _physics_process(_delta):
 		p2_super_meter.texture_progress = preload("res://ui/super_bar3.png") if p2.supers_available < 1 else preload("res://ui/super_ready.tres")
 		$"%P1CounterLabel".visible = p2.current_state() is CharacterHurtState and p2.current_state().counter and (game.game_paused or (game.real_tick / 2) % 2 == 0)
 		$"%P2CounterLabel".visible = p1.current_state() is CharacterHurtState and p1.current_state().counter and (game.game_paused or (game.real_tick / 2) % 2 == 0)
-		p1_brace_label.visible = p1.current_state() is CharacterHurtState and p1.current_state().brace and (game.game_paused or ((game.real_tick / 2) + 1) % 2 == 0)
-		p2_brace_label.visible = p2.current_state() is CharacterHurtState and p2.current_state().brace and (game.game_paused or ((game.real_tick / 2) + 1) % 2 == 0)
+		p1_brace_label.visible = p1.current_state() is CounterAttack and p1.current_state().bracing and (game.game_paused or ((game.real_tick / 2) + 1) % 2 == 0)
+		p2_brace_label.visible = p2.current_state() is CounterAttack and p2.current_state().bracing and (game.game_paused or ((game.real_tick / 2) + 1) % 2 == 0)
 		$"%P1AdvantageLabel".visible = p1.initiative and p1.current_state().initiative_effect
 		$"%P2AdvantageLabel".visible = p2.initiative and p2.current_state().initiative_effect
 		$"%P1AdvantageLabel".modulate.a = 1.0 - p1.current_state().current_tick * 0.1
@@ -232,14 +232,15 @@ func _physics_process(_delta):
 	
 		if game.super_active and not game.parry_freeze:
 			if not super_started:
+				var fx_scene = preload("res://fx/superparticle.tscn") if not game.prediction_effect else preload("res://fx/predictparticle.tscn")
 				if game.p1_super:
-					var fx = preload("res://fx/superparticle.tscn").instance()
+					var fx = fx_scene.instance()
 					fx.set_speed_scale(super_speed_scale(game.super_freeze_ticks))
 					p1_super_effects_node.call_deferred("add_child", fx)
 					p1_effects.append(fx)
 					
 				if game.p2_super:
-					var fx = preload("res://fx/superparticle.tscn").instance()
+					var fx = fx_scene.instance()
 					fx.set_speed_scale(super_speed_scale(game.super_freeze_ticks))
 					p2_super_effects_node.call_deferred("add_child", fx)
 					p1_effects.append(fx)

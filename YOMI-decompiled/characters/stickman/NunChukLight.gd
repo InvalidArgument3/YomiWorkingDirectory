@@ -6,7 +6,7 @@ var charged = false
 
 func _enter():
 	determine_charge()
-	if data:
+	if data is Dictionary:
 		if data.y != 0:
 			return "NunChukLightHigh"
 	determine_charge()
@@ -19,7 +19,7 @@ func determine_charge():
 	else :
 		charged = false
 
-func _frame_6():
+func _frame_4():
 	if charged:
 		spawn_exported_projectile()
 	pass

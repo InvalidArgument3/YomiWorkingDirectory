@@ -42,9 +42,11 @@ export (AirType) var air_type = AirType.Grounded
 export  var uses_air_movement = false
 export  var land_cancel = false
 export  var landing_recovery = - 1
+export  var min_land_cancel_frame = - 1
 
 export  var _c_Interrupt_Data = 0
 export  var iasa_at = - 1
+export  var iasa_on_hit = - 1
 export  var interrupt_frames = []
 export  var throw_techable = false
 export  var interruptible_on_opponent_turn = false
@@ -56,6 +58,8 @@ export  var next_state_on_hold = true
 export  var next_state_on_hold_on_opponent_turn = false
 export  var combo_only = false
 export  var neutral_only = false
+export  var end_feint = true
+export  var usable_from_whiff_cancel_if_possible = true
 
 var starting_iasa_at = - 1
 var starting_interrupt_frames = []
@@ -100,8 +104,11 @@ var initiative_effect_spawned = false
 var dash_iasa = false
 var started_in_air = false
 var hit_yet = false
+var hit_anything = false
 var hit_cancelled = false
 var started_during_combo = false
+
+var is_brace = false
 
 var feinting = false
 
@@ -112,6 +119,7 @@ var hit_cancel_into = []
 var hit_cancel_exceptions = []
 var busy_interrupt_into = []
 var allowed_stances = []
+var usable_requirement_nodes = []
 
 var is_hurt_state = false
 var start_interruptible_on_opponent_turn = false
@@ -129,6 +137,9 @@ func init():
 	allowed_stances.append_array(get_categories(allowed_stances_string))
 	interrupt_exceptions.append_array(get_categories(interrupt_exceptions_string))
 	start_interruptible_on_opponent_turn = interruptible_on_opponent_turn
+	for node in get_children():
+		if node is UsableRequirement:
+			usable_requirement_nodes.append(node)
 	if burst_cancellable:
 		hit_cancel_into.append("OffensiveBurst")
 	if instant_cancellable:
@@ -173,8 +184,11 @@ func is_usable_with_grounded_check(force_aerial = false, force_grounded = false)
 	return true
 
 func is_usable():
-	if host.current_state().state_name == "WhiffInstantCancel" and not has_hitboxes:
-		return false
+	if host.current_state().state_name == "WhiffInstantCancel":
+		if not has_hitboxes:
+			return false
+		if not usable_from_whiff_cancel_if_possible:
+			return false
 	if uses_air_movement:
 		if host.air_movements_left <= 0:
 			return false
@@ -184,6 +198,9 @@ func is_usable():
 		return false
 	if neutral_only and host.combo_count >= 1:
 		return false
+	for node in usable_requirement_nodes:
+		if not node.check(host):
+			return false
 	return true
 
 func get_velocity_forward_meter_gain_multiplier():
@@ -203,6 +220,7 @@ func _enter_shared():
 
 
 	hit_yet = false
+	hit_anything = false
 	started_in_air = false
 	host.update_grounded()
 	if change_stance_to:
@@ -246,7 +264,11 @@ func _on_hit_something(obj, hitbox):
 	if not hit_yet and obj == host.opponent:
 		hit_yet = true
 		host.stack_move_in_combo(state_name)
+		if host.combo_count > 0 and hit_yet:
+			started_during_combo = true
+	hit_anything = true
 	if obj.is_in_group("Fighter"):
+		host.melee_attack_combo_scaling_applied = true
 		host.add_penalty( - 25)
 	._on_hit_something(obj, hitbox)
 	if hitbox.cancellable:
@@ -328,7 +350,7 @@ func _tick_shared():
 		return next_state
 
 
-	if land_cancel and host.is_grounded() and started_in_air and fixed.ge(host.get_vel().y, "0"):
+	if land_cancel and host.is_grounded() and started_in_air and current_tick > min_land_cancel_frame and fixed.ge(host.get_vel().y, "0"):
 		queue_state_change("Landing", landing_recovery if landing_recovery >= 0 else null)
 	if current_tick <= anim_length and not endless:
 		if can_interrupt() and not interrupt_into.empty():
@@ -374,17 +396,18 @@ func can_feint():
 	return (has_hitboxes or force_feintable) and (host.feints > 0 or host.get_total_super_meter() >= host.MAX_SUPER_METER) and can_feint_if_possible
 
 func can_interrupt():
-	return current_tick == iasa_at or current_tick in interrupt_frames or current_tick == anim_length - 1
+	return current_tick == iasa_at or current_tick in interrupt_frames or current_tick == anim_length - 1 or (hit_anything and current_tick == iasa_on_hit)
 
 func on_got_hit():
 	pass
 
 func _exit_shared():
 	beats_backdash = false
-	if feinting:
+	if feinting and end_feint:
 		host.update_facing()
 		host.feinting = false
 	feinting = false
+	host.melee_attack_combo_scaling_applied = false
 
 
 	._exit_shared()

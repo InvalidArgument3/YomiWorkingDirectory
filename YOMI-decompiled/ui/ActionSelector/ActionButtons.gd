@@ -31,6 +31,10 @@ var turbo_mode = false
 var game
 var forfeit = false
 var opposite_buttons = null
+var locked_in = false
+var can_lock_in = true
+var attempting_lock_in = false
+var lock_in_pressed = false
 
 var continue_button
 
@@ -83,11 +87,23 @@ func _get_opposite_buttons():
 	return opposite_buttons
 
 func _on_submit_pressed():
+	lock_in_pressed = true
+	yield (get_tree(), "idle_frame")
+	yield (get_tree(), "idle_frame")
+
+	if attempting_lock_in:
+		return 
+	attempting_lock_in = true
+	while not can_lock_in:
+		yield (get_tree(), "idle_frame")
+	attempting_lock_in = false
 	var data = null
 	if current_button:
 		data = current_button.get_data()
 	if current_action:
 		on_action_submitted(current_action, data)
+	lock_in_pressed = false
+	locked_in = true
 
 func timeout():
 	if active:
@@ -120,7 +136,21 @@ func _process(delta):
 	if (current_button and not current_button.visible):
 		continue_button.set_pressed(true)
 		continue_button.on_pressed()
+	unpress_extra_on_lock_in()
 	
+func unpress_extra_on_lock_in():
+	var select_button:Button = $"%SelectButton"
+	select_button.shortcut = preload("res://ui/ActionSelector/SelectButtonShortcut.tres")
+	if lock_in_pressed:
+		check_extra_button_pressed(fighter_extra)
+
+func check_extra_button_pressed(node:Node):
+	for child in node.get_children():
+		if child is BaseButton:
+			child.release_focus()
+		else :
+			check_extra_button_pressed(child)
+
 
 func reset():
 	for button_category_container in button_category_containers.values():
@@ -312,7 +342,14 @@ func send_ui_action(action = null):
 		emit_signal("action_clicked", action, current_button.get_data() if current_button else null, get_extra())
 
 
+
+
+	can_lock_in = false
 	yield (get_tree(), "idle_frame")
+	can_lock_in = true
+
+	update_select_button()
+
 	update_buttons(false)
 
 	if current_button:
@@ -545,15 +582,23 @@ func update_buttons(refresh = true):
 	if is_instance_valid(continue_button):
 		continue_button.set_disabled(false)
 
+func update_select_button():
+	var user_facing = game.singleplayer or Network.player_id == player_id
+	if not user_facing:
+		$"%SelectButton".disabled = true
+	else :
+		$"%SelectButton".disabled = game.spectating or locked_in
+
 func activate(refresh = true):
 	if visible and refresh:
 		return 
 
 	active = true
+	locked_in = false
 
 
 	if is_instance_valid(fighter):
-		$"%DI".set_label("DI" + " x%.1f" % float(fighter.get_di_scaling()))
+		$"%DI".set_label("DI" + " x%.1f" % float(fighter.get_di_scaling(false)))
 		var last_action_name = ReplayManager.get_last_action(fighter.id)
 
 		if last_action_name and fighter.state_machine.states_map.has(last_action_name.action):

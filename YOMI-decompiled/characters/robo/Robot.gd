@@ -35,11 +35,11 @@ var can_unlock_gratuitous = true
 var can_flamethrower = true
 var magnet_ticks_left = 0
 var grenade_object = null
+var flame_touching_opponent = null
 
 onready var chainsaw_arm = $"%ChainsawArm"
 onready var drive_jump_sprite = $"%DriveJumpSprite"
 onready var chainsaw_arm_ghosts = [
-
 ]
 
 func _ready():
@@ -76,15 +76,16 @@ func copy_to(f:BaseObj):
 	f.flying_dir = flying_dir
 	if flying_dir != null:
 		f.flying_dir = flying_dir.duplicate(true)
+	f.flame_touching_opponent = flame_touching_opponent
 	pass
 
 func has_armor():
 	return armor_active and not (current_state() is CharacterHurtState)
 
-func incr_combo():
+func incr_combo(scale = true):
 	if combo_count == 0:
 		landed_move = true
-	.incr_combo()
+	.incr_combo(scale)
 	if can_unlock_gratuitous and combo_moves_used.has("GroundSlam") and current_state().name != "GroundSlam":
 		unlock_achievement("ACH_GRATUITOUS")
 		can_unlock_gratuitous = false

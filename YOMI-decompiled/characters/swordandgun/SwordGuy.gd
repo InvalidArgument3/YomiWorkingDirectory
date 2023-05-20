@@ -2,6 +2,8 @@ extends Fighter
 
 signal bullet_used()
 
+export (Texture) var epic_horse_moment
+
 onready var shooting_arm = $"%ShootingArm"
 
 const BARREL_LOCATION_X = "26"
@@ -10,6 +12,7 @@ const GUN_PICKUP_DISTANCE = "26"
 const IS_COWBOY = true
 const RIFT_PROJECTILE = preload("res://characters/swordandgun/projectiles/AfterImageExplosion.tscn")
 const AFTER_IMAGE_MAX_DIST = "410"
+const MAX_AIR_SPEED_1KCUTS = "12"
 
 var bullets_left = 6
 var cut_projectile = null
@@ -34,14 +37,18 @@ var shifted_this_frame = false
 var shifted_last_frame = false
 var stance_teleport_y = 0
 var ticks_until_time_shift = 0
+var lasso_parried = false
+var default_max_air_speed = "9"
 
 func _ready():
 	shooting_arm.set_material(sprite.get_material())
+	material = null
 
 func init(pos = null):
 	.init(pos)
 	bullets_left = 6
 	HOLD_FORCE_STATES["QuickerDraw"] = "SlowHolster"
+	HOLD_RESTARTS.append("DashForward1k")
 
 func copy_to(f):
 	.copy_to(f)
@@ -64,6 +71,14 @@ func shift():
 		shifted_this_frame = true
 		if obj.get_pos().y >= 0:
 			set_vel(get_vel().x, "0")
+
+func start_1k_cuts_buff():
+	max_air_speed = MAX_AIR_SPEED_1KCUTS
+	chara.set_max_air_speed(MAX_AIR_SPEED_1KCUTS)
+
+func end_1k_cuts_buff():
+	max_air_speed = default_max_air_speed
+	chara.set_max_air_speed(default_max_air_speed)
 
 func process_continue():
 
@@ -159,10 +174,9 @@ func try_shoot():
 
 func on_state_ended(state):
 	.on_state_ended(state)
+	if state.state_name == "Roll":
+		lasso_parried = false
 	bullet_cancelling = false
-	pass
-
-func on_hit_something():
 	pass
 
 func use_bullet():
@@ -170,6 +184,9 @@ func use_bullet():
 		return 
 	bullets_left -= 1
 	emit_signal("bullet_used")
+
+func has_1k_cuts():
+	return cut_projectile != null
 
 func on_got_hit():
 	if cut_projectile:
@@ -184,9 +201,17 @@ func on_got_hit():
 
 func _draw():
 	._draw()
+	var draw_target = Vector2()
+	var draw_lasso = false
 	if lasso_projectile:
+		draw_lasso = true
 		var obj = objs_map[lasso_projectile]
 		var obj_pos = obj.get_pos()
-		var draw_target = to_local(Vector2(obj_pos.x, obj_pos.y))
-		draw_target -= draw_target.normalized() * 8
+		draw_target = to_local(Vector2(obj_pos.x, obj_pos.y))
+	elif lasso_parried:
+		draw_lasso = true
+		
+		draw_target = to_local(opponent.get_center_position_float())
+	draw_target -= draw_target.normalized() * 8
+	if draw_lasso:
 		draw_line(Vector2(0, - 16), draw_target, Color("704137"), 2.0, false)

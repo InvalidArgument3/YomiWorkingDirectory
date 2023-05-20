@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=2]
+[gd_scene load_steps=80 format=2]
 
 [ext_resource path="res://ui/UILayer.gd" type="Script" id=1]
 [ext_resource path="res://main.gd" type="Script" id=2]
@@ -9,7 +9,6 @@
 [ext_resource path="res://ui/NetworkDebugLabel.gd" type="Script" id=7]
 [ext_resource path="res://ui/HUD/HudLayer.gd" type="Script" id=8]
 [ext_resource path="res://ui/HUD/BurstMeter.gd" type="Script" id=9]
-[ext_resource path="res://ui/PixeloidSans.ttf" type="DynamicFontData" id=10]
 [ext_resource path="res://BottomBar.gd" type="Script" id=11]
 [ext_resource path="res://ui/CSS/CharacterSelect.tscn" type="PackedScene" id=12]
 [ext_resource path="res://ui/GhostSpeed.gd" type="Script" id=13]
@@ -68,6 +67,7 @@
 [ext_resource path="res://ui/ghostsettingsdown.png" type="Texture" id=66]
 [ext_resource path="res://ui/Credits.tscn" type="PackedScene" id=67]
 [ext_resource path="res://modloader/workshop_uploader/ModUploader.tscn" type="PackedScene" id=68]
+[ext_resource path="res://ui/PixeloidSans-Bold.ttf" type="DynamicFontData" id=69]
 
 [sub_resource type="ShaderMaterial" id=19]
 shader = ExtResource( 50 )
@@ -85,23 +85,17 @@ period = 3.0
 
 [sub_resource type="CanvasItemMaterial" id=10]
 
-[sub_resource type="DynamicFont" id=14]
-size = 18
-outline_size = 2
-outline_color = Color( 0, 0, 0, 1 )
-font_data = ExtResource( 10 )
-
 [sub_resource type="DynamicFont" id=15]
 size = 18
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
-font_data = ExtResource( 10 )
+font_data = ExtResource( 69 )
 
-[sub_resource type="DynamicFont" id=13]
+[sub_resource type="DynamicFont" id=24]
 size = 36
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
-font_data = ExtResource( 10 )
+font_data = ExtResource( 69 )
 
 [sub_resource type="Animation" id=11]
 length = 0.001
@@ -656,7 +650,7 @@ margin_top = -8.0
 margin_right = 36.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 40, 40 )
-custom_fonts/font = SubResource( 14 )
+custom_fonts/font = SubResource( 15 )
 text = "hits"
 align = 1
 valign = 2
@@ -868,6 +862,7 @@ text = "SAD!"
 
 [node name="P1BraceLabel" type="Label" parent="HudLayer/HudLayer"]
 unique_name_in_owner = true
+visible = false
 modulate = Color( 0.113725, 0.552941, 0.960784, 1 )
 anchor_left = 0.5
 anchor_top = 0.5
@@ -929,6 +924,7 @@ align = 2
 
 [node name="P2BraceLabel" type="Label" parent="HudLayer/HudLayer"]
 unique_name_in_owner = true
+visible = false
 modulate = Color( 0.113725, 0.552941, 0.960784, 1 )
 anchor_left = 0.5
 anchor_top = 0.5
@@ -952,9 +948,10 @@ anchor_bottom = 0.5
 margin_top = -22.0
 margin_bottom = 22.0
 theme = ExtResource( 4 )
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 24 )
 text = "P1 WIN"
 align = 1
+clip_text = true
 
 [node name="HudAnimationPlayer" type="AnimationPlayer" parent="HudLayer"]
 unique_name_in_owner = true
@@ -1682,7 +1679,9 @@ margin_left = -45.0
 margin_top = -66.0
 margin_right = 51.0
 margin_bottom = 114.0
+grow_horizontal = 2
 custom_constants/separation = 0
+alignment = 1
 
 [node name="SingleplayerButton" type="Button" parent="UILayer/MainMenu/ButtonContainer"]
 unique_name_in_owner = true
@@ -1785,9 +1784,8 @@ flat = true
 [node name="WorkshopUploader" type="Button" parent="UILayer/MainMenu/ButtonContainer"]
 unique_name_in_owner = true
 visible = false
-margin_top = 180.0
-margin_right = 96.0
-margin_bottom = 200.0
+margin_right = 113.0
+margin_bottom = 20.0
 rect_min_size = Vector2( 0, 20 )
 mouse_default_cursor_shape = 2
 custom_colors/font_color_hover = Color( 1, 0.2, 0.239216, 1 )
@@ -2012,7 +2010,7 @@ script = ExtResource( 53 )
 margin_left = 1.0
 margin_top = 1.0
 margin_right = 160.0
-margin_bottom = 167.0
+margin_bottom = 193.0
 
 [node name="TitleBar" type="Panel" parent="UILayer/OptionsContainer/VBoxContainer"]
 margin_right = 159.0
@@ -2033,7 +2031,7 @@ align = 1
 [node name="Contents" type="PanelContainer" parent="UILayer/OptionsContainer/VBoxContainer"]
 margin_top = 10.0
 margin_right = 159.0
-margin_bottom = 166.0
+margin_bottom = 192.0
 rect_min_size = Vector2( 0, 100 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -2042,11 +2040,11 @@ size_flags_vertical = 3
 margin_left = 1.0
 margin_top = 1.0
 margin_right = 158.0
-margin_bottom = 155.0
+margin_bottom = 181.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UILayer/OptionsContainer/VBoxContainer/Contents/VBoxContainer"]
 margin_right = 157.0
-margin_bottom = 154.0
+margin_bottom = 180.0
 size_flags_vertical = 3
 alignment = 1
 
@@ -2093,77 +2091,77 @@ text = "show projectile owners"
 
 [node name="SpeedLinesButton" type="CheckButton" parent="UILayer/OptionsContainer/VBoxContainer/Contents/VBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
-margin_top = 53.0
+margin_top = 66.0
 margin_right = 157.0
-margin_bottom = 65.0
+margin_bottom = 78.0
 pressed = true
 text = "show speed lines"
 
 [node name="PlaybackControls" type="CheckButton" parent="UILayer/OptionsContainer/VBoxContainer/Contents/VBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
-margin_top = 53.0
+margin_top = 79.0
 margin_right = 157.0
-margin_bottom = 65.0
+margin_bottom = 91.0
 text = "show playback controls"
 
 [node name="HSeparator" type="HSeparator" parent="UILayer/OptionsContainer/VBoxContainer/Contents/VBoxContainer/VBoxContainer"]
-margin_top = 66.0
+margin_top = 92.0
 margin_right = 157.0
-margin_bottom = 70.0
+margin_bottom = 96.0
 
 [node name="EnableEmotes" type="CheckButton" parent="UILayer/OptionsContainer/VBoxContainer/Contents/VBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
-margin_top = 71.0
+margin_top = 97.0
 margin_right = 157.0
-margin_bottom = 83.0
+margin_bottom = 109.0
 pressed = true
 text = "show emotes"
 
 [node name="EnableStyleColorsButton" type="CheckButton" parent="UILayer/OptionsContainer/VBoxContainer/Contents/VBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
-margin_top = 84.0
+margin_top = 110.0
 margin_right = 157.0
-margin_bottom = 96.0
+margin_bottom = 122.0
 text = "enable style colors"
 
 [node name="EnableAurasButton" type="CheckButton" parent="UILayer/OptionsContainer/VBoxContainer/Contents/VBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
-margin_top = 97.0
+margin_top = 123.0
 margin_right = 157.0
-margin_bottom = 109.0
+margin_bottom = 135.0
 text = "enable particle auras"
 
 [node name="EnableHitsparksButton" type="CheckButton" parent="UILayer/OptionsContainer/VBoxContainer/Contents/VBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
-margin_top = 110.0
+margin_top = 136.0
 margin_right = 157.0
-margin_bottom = 122.0
+margin_bottom = 148.0
 text = "enable custom hitsparks"
 
 [node name="HSeparator2" type="HSeparator" parent="UILayer/OptionsContainer/VBoxContainer/Contents/VBoxContainer/VBoxContainer"]
-margin_top = 123.0
+margin_top = 149.0
 margin_right = 157.0
-margin_bottom = 127.0
+margin_bottom = 153.0
 
 [node name="ModToggle" type="CheckButton" parent="UILayer/OptionsContainer/VBoxContainer/Contents/VBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
-margin_top = 128.0
+margin_top = 154.0
 margin_right = 157.0
-margin_bottom = 140.0
+margin_bottom = 166.0
 custom_colors/font_color = Color( 0.396078, 0.901961, 1, 1 )
 text = "enable mods (must restart)"
 
 [node name="Padding" type="Control" parent="UILayer/OptionsContainer/VBoxContainer/Contents/VBoxContainer/VBoxContainer"]
-margin_top = 141.0
+margin_top = 167.0
 margin_right = 157.0
-margin_bottom = 141.0
+margin_bottom = 167.0
 size_flags_vertical = 3
 
 [node name="OptionsBackButton" type="Button" parent="UILayer/OptionsContainer/VBoxContainer/Contents/VBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
-margin_top = 142.0
+margin_top = 168.0
 margin_right = 157.0
-margin_bottom = 154.0
+margin_bottom = 180.0
 text = "done"
 
 [node name="Lobby" parent="UILayer" instance=ExtResource( 5 )]

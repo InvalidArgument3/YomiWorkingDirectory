@@ -9,10 +9,9 @@ func _tick():
 		host.set_facing(host.creator.get_facing_int())
 	host.total_ticks += 1
 	if host.total_ticks > LIFETIME:
-		host.disable()
-		host.creator.cut_projectile = null
+		disable()
+
 
 func disable():
 	host.disable()
 	terminate_hitboxes()
-	host.creator.cut_projectile = null

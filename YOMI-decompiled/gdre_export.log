@@ -1,10 +1,10 @@
 GDRE Tools v0.5.3
 Windows 10.0.19044, NVIDIA GeForce GTX 1070/PCIe/SSE2, opengl3
-Extracted 3825 files, no errors detected!
+Extracted 3961 files, no errors detected!
 USER WARNING: Converting lossy imports, you may lose fidelity for indicated assets when re-importing upon loading the project
    at: ImportExporter::_export_imports (modules\gdsdecomp\utility\import_exporter.cpp:55)
 Script version 3.5.x (rev 0xa7aad78) detected
-Saved project config to E:/YOMIModding/YOMI-decompiled/project.godot
+Saved project config to E:/YomiWorkingDirectory/YOMI-decompiled/project.godot
 Recreated plugin config for char_creator
 Recreated plugin config for collision_box
 Recreated plugin config for export_categories
@@ -67,16 +67,16 @@ Did not convert Texture resource res://.import/trail_2.png-2fac6f3070ff20c94d3ce
 USER WARNING: Decompression not implemented yet for texture format DXT5 RGBA8
    at: ImportExporter::_convert_tex (modules\gdsdecomp\utility\import_exporter.cpp:838)
 Did not convert Texture resource res://.import/particle.png-c2ba3d91e96c62035d672392a1197218.s3tc.stex
-Saved project config to E:/YOMIModding/YOMI-decompiled/project.godot
+Saved project config to E:/YomiWorkingDirectory/YOMI-decompiled/project.godot
 
 
 ********************************EXPORT REPORT********************************
 
 Totals:                                 
-Decompiled scripts:                     320
+Decompiled scripts:                     334
 Failed scripts:                         0
-Imported resources for export session:  3825
-Successfully converted:                 1452
+Imported resources for export session:  3961
+Successfully converted:                 1495
 Lossy:                                  2
 Rewrote metadata:                       0
 Non-importable conversions:             2

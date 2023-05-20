@@ -46,6 +46,8 @@ var debug_label
 var chara = FGObject.new()
 
 var stage_width = 0
+var ceiling_height = 0
+var has_ceiling = false
 
 var obj_name:String
 
@@ -86,7 +88,7 @@ var default_hurtbox = {
 var projectile_invulnerable = false
 var throw_invulnerable = false
 
-var state_variables = ["id", "has_projectile_parry_window", "always_parriable", "use_platforms", "gravity", "ground_friction", "air_friction", "max_ground_speed", "max_air_speed", "max_fall_speed", "projectile_invulnerable", "gravity_enabled", "default_hurtbox", "throw_invulnerable", "creator_name", "name", "obj_name", "stage_width", "hitlag_ticks", "combo_count", "invulnerable", "current_tick", "disabled", "state_interruptable", "state_hit_cancellable"]
+var state_variables = ["id", "ceiling_height", "has_ceiling", "has_projectile_parry_window", "always_parriable", "use_platforms", "gravity", "ground_friction", "air_friction", "max_ground_speed", "max_air_speed", "max_fall_speed", "projectile_invulnerable", "gravity_enabled", "default_hurtbox", "throw_invulnerable", "creator_name", "name", "obj_name", "stage_width", "hitlag_ticks", "combo_count", "invulnerable", "current_tick", "disabled", "state_interruptable", "state_hit_cancellable"]
 
 var hitboxes = []
 
@@ -105,10 +107,19 @@ var sounds = {
 	
 }
 
+var logic_rng:BetterRng
+var logic_rng_seed = 0
+
 func _enter_tree():
 	if obj_name:
 		name = obj_name
 	add_to_group("BaseObj")
+
+func get_p1():
+	return obj_from_name("P1")
+
+func get_p2():
+	return obj_from_name("P2")
 
 func _ready():
 	state_machine.connect("state_exited", self, "_on_state_exited")
@@ -290,7 +301,11 @@ func copy_to(o:BaseObj):
 
 	for state in o.state_machine.states_map:
 		state_machine.states_map[state].copy_hurtbox_states(o.state_machine.states_map[state])
+	o.logic_rng = BetterRng.new()
+	o.logic_rng.seed = logic_rng_seed
+	o.logic_rng.state = logic_rng.state
 
+	
 func get_frames():
 	return ReplayManager.frames[id]
 
@@ -365,6 +380,16 @@ func get_facing():
 
 func get_opponent():
 	return null
+
+func get_fighter():
+	return null
+
+func hash_rng():
+	var fighter = get_fighter()
+	var opponent = get_opponent()
+	var input_hash = hash(fighter.get_state_hash()) + hash(opponent.get_state_hash())
+	logic_rng.seed = hash(logic_rng.state + input_hash)
+
 
 func spawn_object(projectile:PackedScene, pos_x:int, pos_y:int, relative = true, data = null, local = true):
 	var obj = projectile.instance()
@@ -530,6 +555,7 @@ func set_pos(x, y):
 			collision_box.update_position(x, y)
 		return 
 	chara.set_position_str(x, y)
+
 
 func set_snap_to_ground(snap:bool):
 	chara.set_snap_to_ground(snap)
@@ -734,6 +760,29 @@ func state_tick():
 		if ( not state_machine.state.endless) and state_machine.state.current_tick >= state_machine.state.anim_length and state_machine.queued_states == []:
 			state_machine.queue_state(state_machine.state.fallback_state)
 			state_machine.tick()
+	
+func randi_():
+	hash_rng()
+	return logic_rng.randi()
+
+func randi_range(a:int, b:int):
+	hash_rng()
+	return logic_rng.randi_range(a, b)
+
+func randi_percent(n:int)->bool:
+	hash_rng()
+	return logic_rng.randi_range(0, 99) < n
+
+func randi_choice(choices:Array):
+	hash_rng()
+	return logic_rng.choose(choices)
+
+func randi_weighted_choice(choices:Array, weights:Array):
+	assert (weights == [] or choices.size() == weights.size())
+	return choices[logic_rng.weighted_choice(choices, weights)]
+
+func should_hide_rng()->bool:
+	return is_ghost and ( not Global.current_game.singleplayer or Global.current_game.spectating)
 
 func tick_after():
 	pass

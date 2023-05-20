@@ -4,7 +4,7 @@ const ORB_SCENE = preload("res://characters/wizard/projectiles/orb/Orb.tscn")
 const ORB_PARTICLE_SCENE = preload("res://characters/wizard/projectiles/orb/OrbSpawnParticle.tscn")
 
 const HOVER_AMOUNT = 1200
-const HOVER_MIN_AMOUNT = 50
+const HOVER_MIN_AMOUNT = 250
 const HOVER_VEL_Y_POS_MODIFIER = "0.70"
 const HOVER_VEL_Y_NEG_MODIFIER = "0.94"
 const HOVER_GROUND_FRIC = "0.025"
@@ -18,13 +18,14 @@ const SPARK_BOMB_PUSH_DISTANCE = "60"
 const SPARK_EXPLOSION_AIR_SPEED = 25
 const SPARK_EXPLOSION_GROUND_SPEED = 20
 const SPARK_EXPLOSION_DASH_SPEED = 12
-const SPARK_SPEED_FRAMES = 35
+const SPARK_SPEED_FRAMES = 70
 const SPARK_BOMB_SELF_DAMAGE = 31
 
 var hover_left = 0
-var hover_drain_amount = 12
-var hover_gain_amount = 9
-var hover_gain_amount_air = 2
+var hover_drain_amount = 19
+var fast_fall_drain_amount = 20
+var hover_gain_amount = 15
+var hover_gain_amount_air = 1
 var hovering = false
 var ghost_started_hovering = false
 var fast_falling = false
@@ -33,11 +34,12 @@ var gusts_in_combo = 0
 var tether_ticks = 0
 var geyser_charge = 0
 
-var orb_projectile
+var orb_projectile = null
 var can_flame_wave = true
 var can_vile_clutch = true
 var current_orb_push = null
 var detonating_bombs = false
+var boulder_projectile = null
 
 var spark_bombs = []
 var nearby_spark_bombs = []
@@ -49,7 +51,7 @@ onready var spark_speed_particle = $"%SparkSpeedParticle"
 
 func init(pos = null):
 	.init(pos)
-	hover_left = HOVER_AMOUNT / 4
+	hover_left = (HOVER_AMOUNT / 4) * 3
 	if infinite_resources:
 		hover_left = HOVER_AMOUNT
 	geyser_charge = 0
@@ -110,7 +112,11 @@ func on_state_started(state):
 func on_got_hit():
 	hovering = false
 	fast_falling = false
-	pass
+	if boulder_projectile != null:
+		var obj = obj_from_name(boulder_projectile)
+		if obj:
+			obj.drop()
+		boulder_projectile = null
 
 func tick():
 	if spark_speed_frames > 0:
@@ -159,8 +165,13 @@ func tick():
 							hover_left = 0
 		if fast_falling:
 			hovering = false
+			if not infinite_resources:
+				hover_left -= fast_fall_drain_amount
+				if hover_left <= 0:
+					fast_falling = false
+					hover_left = 0
 			apply_grav_fast_fall()
-		if current_state().busy_interrupt_type != CharacterState.BusyInterrupt.Hurt:
+		if current_state().busy_interrupt_type != CharacterState.BusyInterrupt.Hurt and not hovering:
 			hover_left += hover_gain_amount if is_grounded() else hover_gain_amount_air
 			if hover_left > HOVER_AMOUNT:
 				hover_left = HOVER_AMOUNT
@@ -207,6 +218,7 @@ func tick():
 				var falloff_power = fixed.round(fixed.div(str(TETHER_TICKS - tether_ticks), "3"))
 				var force = fixed.normalized_vec_times(str(dir.x), str(dir.y), fixed.mul(TETHER_SPEED, fixed.powu(TETHER_FALLOFF, falloff_power)))
 				apply_force(force.x, force.y)
+
 		tether_ticks -= 1
 		if is_grounded():
 			tether_ticks = 0
@@ -214,11 +226,15 @@ func tick():
 	if combo_count <= 0 and not opponent.current_state().endless:
 		gusts_in_combo = 0
 
+	if hover_left <= 0:
+		hover_left = 0
+
 func start_moisture_effect():
 	$"%DrawMoistureParticle".start_emitting()
 
 func stop_moisture_effect():
 	$"%DrawMoistureParticle".stop_emitting()
+
 
 func process_extra(extra):
 	.process_extra(extra)
@@ -252,8 +268,15 @@ func process_extra(extra):
 	if extra.has("detonate"):
 		detonating_bombs = extra.detonate
 
+
+
+
+
+
+
+
 func can_fast_fall():
-	return not is_grounded()
+	return not is_grounded() and can_hover()
 
 func can_hover():
 

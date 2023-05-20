@@ -1,6 +1,7 @@
 extends Node
 
-const IVY_ID = 295237947
+const FX_IDS = [295237947, 206674951]
+const FX_NAMES = ["ivy sly", "graf"]
 
 signal started
 
