@@ -212,7 +212,13 @@
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
 shader = ExtResource( 88 )
+shader_param/use_extra_color_1 = false
+shader_param/use_extra_color_2 = false
+shader_param/extra_replace_color_1 = Color( 1, 0, 1, 1 )
+shader_param/extra_replace_color_2 = Color( 1, 0, 1, 1 )
 shader_param/color = Color( 1, 1, 1, 1 )
+shader_param/extra_color_1 = Color( 1, 1, 1, 1 )
+shader_param/extra_color_2 = Color( 1, 1, 1, 1 )
 shader_param/max_color_distance = 0.01
 shader_param/super_dim = false
 shader_param/use_outline = false
@@ -221,7 +227,13 @@ shader_param/outline_color = Color( 0, 0, 0, 1 )
 [sub_resource type="ShaderMaterial" id=2]
 resource_local_to_scene = true
 shader = ExtResource( 88 )
+shader_param/use_extra_color_1 = false
+shader_param/use_extra_color_2 = false
+shader_param/extra_replace_color_1 = Color( 1, 0, 1, 1 )
+shader_param/extra_replace_color_2 = Color( 1, 0, 1, 1 )
 shader_param/color = Color( 1, 1, 1, 1 )
+shader_param/extra_color_1 = Color( 1, 1, 1, 1 )
+shader_param/extra_color_2 = Color( 1, 1, 1, 1 )
 shader_param/max_color_distance = 0.01
 shader_param/super_dim = false
 shader_param/use_outline = false
@@ -459,19 +471,8 @@ ticks_per_frame = 2
 anim_length = 20
 ticks_per_frame = 10
 
-[node name="HurtAerial" parent="StateMachine" index="33"]
+[node name="HurtAerial" parent="StateMachine" index="35"]
 visible = false
-
-[node name="Taunt" parent="StateMachine" index="45"]
-script = ExtResource( 202 )
-__meta__ = {
-"_editor_description_": ""
-}
-ticks_per_frame = 10
-loop_animation = true
-enter_sfx_volume = 0.0
-sfx = ExtResource( 201 )
-sfx_volume = 0.0
 
 [node name="AttackJab" type="Node2D" parent="StateMachine" index="47"]
 script = ExtResource( 35 )
@@ -571,6 +572,7 @@ __meta__ = {
 apply_forces = true
 apply_fric = true
 apply_grav = true
+reset_momentum = true
 sprite_animation = "DropKick"
 anim_length = 35
 ticks_per_frame = 2
@@ -578,7 +580,6 @@ endless = true
 enter_force_dir_x = "0.75"
 enter_force_dir_y = "-0.60"
 enter_force_speed = "7.0"
-reset_momentum = true
 title = "DropKick"
 type = 1
 button_texture = ExtResource( 194 )
@@ -618,13 +619,13 @@ __meta__ = {
 apply_forces = true
 apply_fric = true
 apply_grav = true
+reset_momentum = true
 sprite_animation = "DiveKick"
 anim_length = 50
 ticks_per_frame = 2
 force_dir_y = "10"
 force_speed = "10"
 force_tick = 20
-reset_momentum = true
 title = "DiveKick"
 type = 1
 button_texture = ExtResource( 229 )
@@ -660,11 +661,11 @@ __meta__ = {
 apply_forces = true
 apply_fric = true
 apply_grav = true
+reset_momentum = true
 sprite_animation = "DiveKick"
 anim_length = 40
 ticks_per_frame = 2
 force_tick = 20
-reset_momentum = true
 title = "DownKick"
 type = 1
 button_texture = ExtResource( 230 )
@@ -869,6 +870,17 @@ interrupt_from_string = "Aerial
 AerialAttack"
 interrupt_into_string = "Aerial"
 hit_cancel_into_string = "Aerial"
+
+[node name="Taunt" parent="StateMachine" index="57"]
+script = ExtResource( 202 )
+__meta__ = {
+"_editor_description_": ""
+}
+ticks_per_frame = 10
+loop_animation = true
+enter_sfx_volume = 0.0
+sfx = ExtResource( 201 )
+sfx_volume = 0.0
 
 [node name="EmoteLabel" parent="." index="10"]
 margin_top = -67.0
